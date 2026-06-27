@@ -4,17 +4,17 @@ const REPO_SELECT_ID = "gfghub-repo-select";
 const BUTTON_ID = "gfghub-push-btn";
 const CONTAINER_ID = "gfghub-floating-container";
 
-async function getSavedRepositoryId() {
+async function getSavedRepository() {
   return new Promise((resolve) => {
-    chrome.storage.local.get(["savedRepoId"], (result) => {
-      resolve(result.savedRepoId || "");
+    chrome.storage.local.get(["selectedRepo"], (result) => {
+      resolve(result.selectedRepo || "");
     });
   });
 }
 
-async function saveRepositoryId(id) {
+async function saveRepository(repo) {
   return new Promise((resolve) => {
-    chrome.storage.local.set({ savedRepoId: id }, () => {
+    chrome.storage.local.set({ selectedRepo: repo }, () => {
       resolve();
     });
   });
@@ -38,27 +38,23 @@ async function createRepoDropdown(container) {
 
   try {
     const repos = await getRepositories();
-    const savedRepoId = await getSavedRepositoryId();
+    const savedRepo = await getSavedRepository();
 
     console.log("GFGHub repos response:", repos);
 
     repos.forEach((repo) => {
       const option = document.createElement("option");
-
-      // Your current backend expects repositoryId,
-      // so keep Mongo repo fields here.
-      option.value = repo._id;
-      option.textContent = repo.repoName;
-
+      option.value = repo.full_name;
+      option.textContent = repo.full_name;
       select.appendChild(option);
     });
 
-    if (savedRepoId) {
-      select.value = savedRepoId;
+    if (savedRepo) {
+      select.value = savedRepo;
     }
 
     select.addEventListener("change", async () => {
-      await saveRepositoryId(select.value);
+      await saveRepository(select.value);
     });
   } catch (err) {
     console.error("Failed to load repositories:", err);
@@ -82,8 +78,8 @@ function createPushButton(container) {
 
   btn.addEventListener("click", async () => {
     try {
-      const repositoryId = document.getElementById(REPO_SELECT_ID)?.value;
-      if (!repositoryId) {
+      const repositoryName = document.getElementById(REPO_SELECT_ID)?.value;
+      if (!repositoryName) {
         alert("Please select a repository first.");
         return;
       }
@@ -104,7 +100,7 @@ function createPushButton(container) {
 
       const payload = {
         code,
-        repositoryId,
+        repositoryName,
         problemName,
         difficulty,
         language,
@@ -135,9 +131,6 @@ function createPushButton(container) {
 
           if (response.success) {
             alert("Solution pushed successfully!");
-          } else if (response.status === "received") {
-            // If your background only acknowledges receipt
-            alert("Pushing code in background...");
           } else {
             alert(response.message || "Push failed.");
           }

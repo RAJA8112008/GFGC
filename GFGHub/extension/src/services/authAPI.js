@@ -1,20 +1,12 @@
-const BACKEND_URL = "http://localhost:5000";
-
-export const loginWithGithub = () => {
-  chrome.tabs.create({
-    url: `${BACKEND_URL}/api/auth/github`,
-  });
-};
-
 export const saveToken = async (token) => {
-  return chrome.storage.local.set({ jwt: token });
+  return chrome.storage.local.set({ githubToken: token });
 };
 
 export const getToken = async () => {
-  const result = await chrome.storage.local.get(["jwt"]);
-  return result.jwt || null;
+  const result = await chrome.storage.local.get(["githubToken"]);
+  return result.githubToken || null;
 };
 
 export const logout = async () => {
-  await chrome.storage.local.remove("jwt");
+  await chrome.storage.local.remove(["githubToken", "selectedRepo", "githubUser"]);
 };
