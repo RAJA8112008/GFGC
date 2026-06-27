@@ -2,38 +2,65 @@ import { getToken } from "./authAPI";
 
 const BACKEND_URL = "http://localhost:5000";
 
-export const pushSolution = async (
-    payload
-) => {
-    const token = await getToken();
+export const pushSolution = async (payload) => {
+  const token = await getToken();
 
-    const response = await fetch(
-        `${BACKEND_URL}/api/solutions`,
-        {
-            method: "POST",
-            headers: {
-                "Content-Type":
-                    "application/json",
-                Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(payload),
-        }
-    );
+  if (!token) {
+    throw new Error("Please login first");
+  }
 
-    return await response.json();
+  const response = await fetch(`${BACKEND_URL}/api/solutions`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(payload),
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Push failed");
+  }
+
+  return data;
 };
 
 export const getStats = async () => {
-    const token = await getToken();
+  const token = await getToken();
 
-    const response = await fetch(
-        `${BACKEND_URL}/api/dashboard/stats`,
-        {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        }
-    );
+  if (!token) {
+    throw new Error("Please login first");
+  }
 
-    return await response.json();
+  const response = await fetch(`${BACKEND_URL}/api/dashboard/stats`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Failed to load stats");
+  }
+
+  return data;
+};
+
+export const getCurrentUser = async () => {
+  const token = await getToken();
+
+  if (!token) return null;
+
+  const response = await fetch(`${BACKEND_URL}/api/auth/me`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) return null;
+
+  return await response.json();
 };

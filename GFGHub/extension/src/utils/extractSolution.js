@@ -1,22 +1,24 @@
-// src/utils/extractSolution.js
-/**
- * Normalise the raw data collected by the content script into the
- * shape expected by the backend.
- *
- * @param {Object} raw - the object stored by gfgDetector.js
- * @returns {Object} - formatted payload ready for pushSolution()
- */
+export function normalizeLanguage(raw) {
+  if (!raw) return "cpp";
+
+  const value = raw.toLowerCase();
+
+  if (value.includes("c++") || value === "cpp") return "cpp";
+  if (value.includes("python")) return "python";
+  if (value.includes("java")) return "java";
+  if (value.includes("javascript")) return "javascript";
+
+  return "cpp";
+}
+
 export function formatPayload(raw) {
-    // The content script already sends everything we need; this function
-    // simply ensures the field names match the backend model.
-    return {
-        repositoryId: raw.repositoryId, // will be overwritten by popup UI
-        problemName: raw.problemName,
-        difficulty: raw.difficulty,
-        language: raw.language,
-        topic: raw.topic,
-        code: raw.code,
-        problemUrl: raw.problemUrl,
-        // optional: views will be added server‑side, not needed here
-    };
+  return {
+    repositoryId: raw.repositoryId,
+    problemName: raw.problemName || "Untitled Problem",
+    difficulty: raw.difficulty || "Easy",
+    language: raw.language || "cpp",
+    topic: raw.topic || ["GFG"],
+    code: raw.code || "",
+    problemUrl: raw.problemUrl || window.location.href,
+  };
 }

@@ -1,15 +1,14 @@
 {
-  "name": "gfg-hub-extension",
+  "name": "gfghub-extension",
   "version": "1.0.0",
   "description": "Chrome extension to sync GFG solutions to GFGHub",
   "scripts": {
-    "build": "webpack --mode production",
-    "watch": "webpack --watch --mode development",
-    "dev": "npm run watch"
+    "dev": "webpack --mode production",
+    "build": "webpack --watch --mode development"
   },
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.23.0",

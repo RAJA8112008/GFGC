@@ -1,5 +1,3 @@
-export const createFolderStructure = (
-    difficulty
-) => {
-    return `GFG/${difficulty}`;
+export const createFolderStructure = (difficulty = "Easy") => {
+  return `GFG/${difficulty}`;
 };
