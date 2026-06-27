@@ -1,6 +1,6 @@
 import { getToken } from "./authAPI";
 
-const BACKEND_URL = "http://localhost:5000";
+const BACKEND_URL = "https://gfgc-1.onrender.com/";
 
 export const pushSolution = async (payload) => {
   const token = await getToken();

@@ -1,46 +1,46 @@
 import React, { useEffect, useState } from "react";
-import { saveToken, getToken, logout } from "../services/authAPI";
-import { getUserProfile, getRepositories, createRepository } from "../services/githubAPI";
+import { loginWithGithub, getToken, logout } from "../services/authAPI";
+import { getCurrentUser, getStats } from "../services/backendAPI";
+import { getRepositories, createRepository } from "../services/githubAPI";
 
 export default function Popup() {
   const [token, setToken] = useState(null);
-  const [inputToken, setInputToken] = useState("");
   const [user, setUser] = useState(null);
+  const [stats, setStats] = useState(null);
   const [repos, setRepos] = useState([]);
   const [repoName, setRepoName] = useState("");
-  const [selectedRepo, setSelectedRepo] = useState("");
+  const [selectedRepoId, setSelectedRepoId] = useState("");
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
 
   const loadAll = async () => {
     try {
       setLoading(true);
-      const savedToken = await getToken();
-      setToken(savedToken);
+      const jwt = await getToken();
+      setToken(jwt);
 
-      if (!savedToken) {
+      if (!jwt) {
         setLoading(false);
         return;
       }
 
-      // Fetch user profile and repositories directly from GitHub
-      const userProfile = await getUserProfile(savedToken);
-      setUser(userProfile);
+      const [me, statsData, reposData] = await Promise.all([
+        getCurrentUser(),
+        getStats(),
+        getRepositories(),
+      ]);
 
-      const reposData = await getRepositories();
+      setUser(me);
+      setStats(statsData);
       setRepos(reposData);
 
-      const stored = await chrome.storage.local.get(["selectedRepo"]);
-      if (stored.selectedRepo) {
-        setSelectedRepo(stored.selectedRepo);
+      const stored = await chrome.storage.local.get(["savedRepoId"]);
+      if (stored.savedRepoId) {
+        setSelectedRepoId(stored.savedRepoId);
       }
     } catch (err) {
       console.error(err);
-      setMessage(err.message || "Failed to load data from GitHub");
-      // If token is invalid, clear it
-      if (err.message?.includes("Invalid GitHub token")) {
-        handleLogout();
-      }
+      setMessage(err.message || "Something went wrong");
     } finally {
       setLoading(false);
     }
@@ -50,27 +50,6 @@ export default function Popup() {
     loadAll();
   }, []);
 
-  const handleSaveToken = async () => {
-    if (!inputToken.trim()) {
-      setMessage("Please enter a valid token");
-      return;
-    }
-    try {
-      setLoading(true);
-      // Validate token first
-      const userProfile = await getUserProfile(inputToken.trim());
-      await saveToken(inputToken.trim());
-      setToken(inputToken.trim());
-      setUser(userProfile);
-      setInputToken("");
-      setMessage("Token saved successfully!");
-      loadAll();
-    } catch (err) {
-      setMessage("Invalid token. Please make sure it has 'repo' scope.");
-      setLoading(false);
-    }
-  };
-
   const handleCreateRepo = async () => {
     try {
       if (!repoName.trim()) {
@@ -78,13 +57,13 @@ export default function Popup() {
         return;
       }
 
-      setMessage("Creating repository on GitHub...");
+      setMessage("Creating repository...");
       const repo = await createRepository(repoName.trim());
       setRepos((prev) => [repo, ...prev]);
-      setSelectedRepo(repo.full_name);
-      await chrome.storage.local.set({ selectedRepo: repo.full_name });
+      setSelectedRepoId(repo._id);
+      await chrome.storage.local.set({ savedRepoId: repo._id });
       setRepoName("");
-      setMessage(`Repository "${repo.name}" created and selected!`);
+      setMessage("Repository created successfully");
     } catch (err) {
       setMessage(err.message || "Failed to create repo");
     }
@@ -92,17 +71,18 @@ export default function Popup() {
 
   const handleRepoChange = async (e) => {
     const value = e.target.value;
-    setSelectedRepo(value);
-    await chrome.storage.local.set({ selectedRepo: value });
+    setSelectedRepoId(value);
+    await chrome.storage.local.set({ savedRepoId: value });
   };
 
   const handleLogout = async () => {
     await logout();
     setToken(null);
     setUser(null);
+    setStats(null);
     setRepos([]);
-    setSelectedRepo("");
-    setMessage("Logged out successfully");
+    setSelectedRepoId("");
+    setMessage("Logged out");
   };
 
   if (loading) {
@@ -113,52 +93,24 @@ export default function Popup() {
     return (
       <div style={{ padding: 16, width: 320, fontFamily: "sans-serif", boxSizing: "border-box" }}>
         <h2 style={{ marginTop: 0, color: "#2563eb" }}>GFGHub Sync</h2>
-        <p style={{ fontSize: "14px", color: "#4b5563", lineHeight: "1.4" }}>
-          To sync your GeeksforGeeks solutions directly to GitHub, please enter a GitHub Personal Access Token (PAT) with <strong>repo</strong> scope.
+        <p style={{ fontSize: "14px", color: "#4b5563", lineHeight: "1.4", marginBottom: "16px" }}>
+          Login to automatically push your GeeksforGeeks solutions directly to your GitHub repositories.
         </p>
-        <a
-          href="https://github.com/settings/tokens/new?scopes=repo&description=GFGHub%20Sync"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{
-            display: "inline-block",
-            marginBottom: "12px",
-            fontSize: "13px",
-            color: "#2563eb",
-            textDecoration: "none",
-            fontWeight: "600",
-          }}
-        >
-          🔑 Click here to generate a token
-        </a>
-        <input
-          type="password"
-          value={inputToken}
-          onChange={(e) => setInputToken(e.target.value)}
-          placeholder="Paste your GitHub PAT here"
-          style={{
-            width: "100%",
-            padding: "10px",
-            borderRadius: "8px",
-            border: "1px solid #d1d5db",
-            marginBottom: "12px",
-            boxSizing: "border-box",
-          }}
-        />
         <button
-          onClick={handleSaveToken}
+          onClick={loginWithGithub}
           style={{
             width: "100%",
-            padding: "10px",
+            padding: "12px",
             background: "#2563eb",
             color: "#fff",
             border: "none",
             borderRadius: "8px",
             cursor: "pointer",
             fontWeight: "600",
+            fontSize: "14px",
           }}
         >
-          Save Token
+          Login with GitHub
         </button>
         {message && (
           <p style={{ marginTop: "10px", fontSize: "13px", color: "#dc2626" }}>{message}</p>
@@ -169,20 +121,23 @@ export default function Popup() {
 
   return (
     <div style={{ padding: 16, width: 320, fontFamily: "sans-serif", boxSizing: "border-box" }}>
-      <h2 style={{ marginTop: 0, color: "#2563eb", display: "flex", alignItems: "center", gap: "8px" }}>
-        {user?.avatar_url && (
-          <img
-            src={user.avatar_url}
-            alt="avatar"
-            style={{ width: "28px", height: "28px", borderRadius: "50%" }}
-          />
-        )}
-        GFGHub Sync
-      </h2>
+      <h2 style={{ marginTop: 0, color: "#2563eb" }}>GFGHub Sync</h2>
 
       {user && (
-        <div style={{ marginBottom: 16, fontSize: "14px", color: "#374151" }}>
-          Hi <strong>@{user.login}</strong>! 👋
+        <div style={{ marginBottom: 12, fontSize: "14px", color: "#374151" }}>
+          Welcome, <strong>{user.username}</strong>!
+        </div>
+      )}
+
+      {stats && (
+        <div style={{ marginBottom: 16, fontSize: "13px", padding: "10px", background: "#f3f4f6", borderRadius: "8px", color: "#4b5563" }}>
+          <div style={{ fontWeight: "600", marginBottom: "4px" }}>Solved Stats:</div>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <span>Total: <strong>{stats.total}</strong></span>
+            <span>Easy: <strong>{stats.easy}</strong></span>
+            <span>Medium: <strong>{stats.medium}</strong></span>
+            <span>Hard: <strong>{stats.hard}</strong></span>
+          </div>
         </div>
       )}
 
@@ -191,7 +146,7 @@ export default function Popup() {
           Select Repository
         </label>
         <select
-          value={selectedRepo}
+          value={selectedRepoId}
           onChange={handleRepoChange}
           style={{
             width: "100%",
@@ -204,8 +159,8 @@ export default function Popup() {
         >
           <option value="">Choose repository</option>
           {repos.map((repo) => (
-            <option key={repo.id} value={repo.full_name}>
-              {repo.full_name}
+            <option key={repo._id} value={repo._id}>
+              {repo.repoName}
             </option>
           ))}
         </select>
@@ -241,7 +196,7 @@ export default function Popup() {
             fontWeight: "600",
           }}
         >
-          Create & Select
+          Create Repository
         </button>
       </div>
 

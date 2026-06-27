@@ -4,7 +4,7 @@ const Login = () => {
 
   const handleLogin = () => {
     window.location.href =
-      "http://localhost:5000/api/auth/github";
+      "https://gfgc-1.onrender.com/api/auth/github";
   };
 
   return (

@@ -4,17 +4,17 @@ const REPO_SELECT_ID = "gfghub-repo-select";
 const BUTTON_ID = "gfghub-push-btn";
 const CONTAINER_ID = "gfghub-floating-container";
 
-async function getSavedRepository() {
+async function getSavedRepositoryId() {
   return new Promise((resolve) => {
-    chrome.storage.local.get(["selectedRepo"], (result) => {
-      resolve(result.selectedRepo || "");
+    chrome.storage.local.get(["savedRepoId"], (result) => {
+      resolve(result.savedRepoId || "");
     });
   });
 }
 
-async function saveRepository(repo) {
+async function saveRepositoryId(id) {
   return new Promise((resolve) => {
-    chrome.storage.local.set({ selectedRepo: repo }, () => {
+    chrome.storage.local.set({ savedRepoId: id }, () => {
       resolve();
     });
   });
@@ -38,23 +38,23 @@ async function createRepoDropdown(container) {
 
   try {
     const repos = await getRepositories();
-    const savedRepo = await getSavedRepository();
+    const savedRepoId = await getSavedRepositoryId();
 
     console.log("GFGHub repos response:", repos);
 
     repos.forEach((repo) => {
       const option = document.createElement("option");
-      option.value = repo.full_name;
-      option.textContent = repo.full_name;
+      option.value = repo._id;
+      option.textContent = repo.repoName;
       select.appendChild(option);
     });
 
-    if (savedRepo) {
-      select.value = savedRepo;
+    if (savedRepoId) {
+      select.value = savedRepoId;
     }
 
     select.addEventListener("change", async () => {
-      await saveRepository(select.value);
+      await saveRepositoryId(select.value);
     });
   } catch (err) {
     console.error("Failed to load repositories:", err);
@@ -78,8 +78,8 @@ function createPushButton(container) {
 
   btn.addEventListener("click", async () => {
     try {
-      const repositoryName = document.getElementById(REPO_SELECT_ID)?.value;
-      if (!repositoryName) {
+      const repositoryId = document.getElementById(REPO_SELECT_ID)?.value;
+      if (!repositoryId) {
         alert("Please select a repository first.");
         return;
       }
@@ -100,7 +100,7 @@ function createPushButton(container) {
 
       const payload = {
         code,
-        repositoryName,
+        repositoryId,
         problemName,
         difficulty,
         language,
@@ -281,6 +281,20 @@ function mountUI() {
 }
 
 function initWhenReady() {
+  // Check if we are on the frontend website
+  if (window.location.hostname.includes("vercel.app") || window.location.hostname.includes("localhost")) {
+    if (window.location.pathname.startsWith("/auth-success")) {
+      const urlParams = new URLSearchParams(window.location.search);
+      const token = urlParams.get("token");
+      if (token) {
+        chrome.storage.local.set({ jwt: token }, () => {
+          console.log("GFGHub: Token saved successfully from auth-success page.");
+        });
+      }
+    }
+    return; // Exit early
+  }
+
   const observer = new MutationObserver((mutations) => {
     const bodyText = document.body?.innerText || "";
     if (bodyText.includes("Problem Solved Successfully")) {

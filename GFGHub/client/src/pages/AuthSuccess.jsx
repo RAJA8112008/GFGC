@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
-const BACKEND_URL = "http://localhost:5000";
+const BACKEND_URL = "https://gfgc-1.onrender.com";
 export default function AuthSuccess() {
   const navigate = useNavigate();
   const location = useLocation();
