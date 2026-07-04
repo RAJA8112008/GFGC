@@ -3,7 +3,7 @@ import axios from "axios";
 const instance = axios.create({
     baseURL:
         import.meta.env.VITE_BACKEND_URL ||
-        "https://gfgc-1.onrender.com/api",
+        "https://gfgc-xavx.onrender.com/api",
 });
 
 instance.interceptors.request.use(
