@@ -3,8 +3,10 @@ import React from "react";
 const Login = () => {
 
   const handleLogin = () => {
+    // VITE_BACKEND_URL ends with /api, so strip that to get the base
+    const backendBase = (import.meta.env.VITE_BACKEND_URL || "https://gfgc-1.onrender.com/api").replace(/\/api\/?$/, "");
     window.location.href =
-      "https://gfgc-1.onrender.com/api/auth/github";
+      `${backendBase}/api/auth/github`;
   };
 
   return (

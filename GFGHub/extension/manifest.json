@@ -3,22 +3,27 @@
   "name": "GFGHub Sync",
   "version": "1.0.0",
   "description": "Extract GeeksforGeeks solutions and push them to GitHub",
+
   "permissions": [
     "storage",
     "activeTab",
     "scripting",
     "tabs"
   ],
+
   "host_permissions": [
-    "https://gfgc-1.onrender.com/*",
+    "https://gfgc-xavx.onrender.com/*",
     "https://www.geeksforgeeks.org/*"
   ],
+
   "background": {
     "service_worker": "dist/background.js"
   },
+
   "action": {
     "default_popup": "src/popup/Popup.html"
   },
+
   "content_scripts": [
     {
       "matches": [
@@ -39,6 +44,7 @@
       "world": "MAIN"
     }
   ],
+
   "externally_connectable": {
     "matches": [
       "https://gfgc-theta.vercel.app/*"

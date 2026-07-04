@@ -9,7 +9,7 @@ const instance = axios.create({
 instance.interceptors.request.use(
     (config) => {
         const token =
-            localStorage.getItem("token");
+            localStorage.getItem("gfghub_token");
 
         if (token) {
             config.headers.Authorization =
@@ -27,7 +27,7 @@ instance.interceptors.response.use(
             error.response?.status === 401
         ) {
             localStorage.removeItem(
-                "token"
+                "gfghub_token"
             );
 
             window.location.href =

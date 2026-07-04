@@ -5,7 +5,7 @@ export const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [token, setToken] = useState(localStorage.getItem("token") || null);
+  const [token, setToken] = useState(localStorage.getItem("gfghub_token") || null);
   const [loading, setLoading] = useState(true);
 
   // Fetch the user profile when a token is present
@@ -32,9 +32,9 @@ export const AuthProvider = ({ children }) => {
   // Keep token in localStorage for page reloads
   useEffect(() => {
     if (token) {
-      localStorage.setItem("token", token);
+      localStorage.setItem("gfghub_token", token);
     } else {
-      localStorage.removeItem("token");
+      localStorage.removeItem("gfghub_token");
     }
   }, [token]);
 

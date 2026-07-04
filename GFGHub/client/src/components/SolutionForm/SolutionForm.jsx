@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { addSolution } from '../../redux/slices/solutionSlice.js';
 import { DIFFICULTIES, LANGUAGES } from '../../utils/constants.js';
+import githubAPI from '../../services/githubAPI.js';
 
 const SolutionForm = () => {
     const dispatch = useDispatch();
+    const [repos, setRepos] = useState([]);
+    const [loadingRepos, setLoadingRepos] = useState(true);
     const [form, setForm] = useState({
+        repositoryId: '',
         problemName: '',
         difficulty: DIFFICULTIES[0],
         language: LANGUAGES[0],
@@ -14,12 +18,37 @@ const SolutionForm = () => {
         problemUrl: ''
     });
 
+    // Fetch repositories on mount
+    useEffect(() => {
+        const loadRepos = async () => {
+            try {
+                const data = await githubAPI.getRepos();
+                setRepos(Array.isArray(data) ? data : []);
+                // Auto-select the first repo if available
+                if (Array.isArray(data) && data.length > 0) {
+                    setForm((prev) => ({ ...prev, repositoryId: data[0]._id }));
+                }
+            } catch (error) {
+                console.error('Failed to fetch repos:', error);
+                setRepos([]);
+            } finally {
+                setLoadingRepos(false);
+            }
+        };
+        loadRepos();
+    }, []);
+
     const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!form.repositoryId) {
+            alert('Please select a repository first.');
+            return;
+        }
         dispatch(addSolution(form));
         setForm({
+            repositoryId: form.repositoryId, // keep the selected repo
             problemName: '',
             difficulty: DIFFICULTIES[0],
             language: LANGUAGES[0],
@@ -31,6 +60,24 @@ const SolutionForm = () => {
 
     return (
         <form onSubmit={handleSubmit} className="space-y-4 bg-white dark:bg-gray-800 p-4 rounded shadow">
+            {/* Repository selector */}
+            <select
+                name="repositoryId"
+                value={form.repositoryId}
+                onChange={handleChange}
+                required
+                className="w-full p-2 border rounded"
+            >
+                <option value="" disabled>
+                    {loadingRepos ? 'Loading repositories...' : 'Select a repository'}
+                </option>
+                {repos.map((r) => (
+                    <option key={r._id} value={r._id}>
+                        {r.repoName}
+                    </option>
+                ))}
+            </select>
+
             <input
                 name="problemName"
                 placeholder="Problem Name"
