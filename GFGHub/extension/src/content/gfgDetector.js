@@ -1,3 +1,5 @@
+console.log("🚀 GFGHub content script loaded1");
+
 import { getRepositories } from "../services/githubAPI.js";
 
 const REPO_SELECT_ID = "gfghub-repo-select";
@@ -11,7 +13,7 @@ async function getSavedRepositoryId() {
     });
   });
 }
-
+console.log("🚀 GFGHub content script loaded 2");
 async function saveRepositoryId(id) {
   return new Promise((resolve) => {
     chrome.storage.local.set({ savedRepoId: id }, () => {
@@ -63,7 +65,7 @@ async function createRepoDropdown(container) {
   container.appendChild(select);
   return select;
 }
-
+console.log("🚀 GFGHub content script loaded3");
 function createPushButton(container) {
   const btn = document.createElement("button");
   btn.id = BUTTON_ID;
