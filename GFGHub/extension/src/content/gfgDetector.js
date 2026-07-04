@@ -280,17 +280,6 @@ function mountUI() {
   document.body.appendChild(container);
 }
 
-function isSuccessfulSubmission() {
-  const bodyText = document.body?.innerText || "";
-  return (
-    bodyText.includes("Problem Solved Successfully") ||
-    bodyText.includes("Correct Answer") ||
-    bodyText.includes("Accepted") ||
-    bodyText.includes("All test cases passed") ||
-    bodyText.includes("Your solution was accepted")
-  );
-}
-
 function initWhenReady() {
   // Check if we are on the frontend website (Vercel or localhost)
   if (
@@ -309,29 +298,22 @@ function initWhenReady() {
     return; // Exit early — not a GFG problem page
   }
 
-  let debounceTimer = null;
+  // Only activate on GFG problem pages
+  if (!window.location.pathname.includes("/problems/")) {
+    return;
+  }
 
-  const observer = new MutationObserver(() => {
-    clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(() => {
-      if (isSuccessfulSubmission()) {
-        mountUI();
-      }
-    }, 500);
-  });
-
-  const startObserving = () => {
-    observer.observe(document.body, { childList: true, subtree: true });
-    // Check immediately in case already solved
-    if (isSuccessfulSubmission()) {
+  // Always mount the UI on problem pages
+  const tryMount = () => {
+    if (document.body) {
       mountUI();
     }
   };
 
-  if (document.body) {
-    startObserving();
+  if (document.readyState === "loading") {
+    window.addEventListener("DOMContentLoaded", tryMount);
   } else {
-    window.addEventListener("load", startObserving);
+    tryMount();
   }
 }
 
