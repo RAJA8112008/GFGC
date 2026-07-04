@@ -1,6 +1,6 @@
 import { getToken } from "./authAPI";
 
-const BACKEND_URL = "https://gfgc-1.onrender.com";
+const BACKEND_URL = "https://gfgc-xavx.onrender.com";
 
 export const getRepositories = async () => {
   const token = await getToken();
