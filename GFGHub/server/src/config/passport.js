@@ -19,61 +19,27 @@ passport.use(
       scope: ["repo", "read:user", "user:email"],
     },
     async (accessToken, refreshToken, profile, done) => {
+      try {
+        let user = await User.findOne({ githubId: profile.id });
 
-    try{
-
-        console.log("ACCESS TOKEN:",accessToken);
-        console.log("PROFILE:",profile);
-
-        let user = await User.findOne({
-            githubId:profile.id
-        });
-
-        console.log("Existing User:",user);
-
-        if(!user){
-
-            user = await User.create({
-
-                githubId:profile.id,
-
-                username:profile.username,
-
-                email:profile.emails?.[0]?.value,
-
-                avatarUrl:profile.photos?.[0]?.value,
-
-                githubToken:accessToken
-
-            });
-
-            console.log("New User Created");
-
-        }else{
-
-            user.githubToken=accessToken;
-
-            await user.save();
-
-            console.log("Existing User Updated");
-
+        if (!user) {
+          user = await User.create({
+            githubId: profile.id,
+            username: profile.username,
+            email: profile.emails?.[0]?.value,
+            avatarUrl: profile.photos?.[0]?.value,
+            githubToken: accessToken,
+          });
+        } else {
+          user.githubToken = accessToken;
+          await user.save();
         }
 
-        return done(null,user);
-
+        return done(null, user);
+      } catch (error) {
+        return done(error, null);
+      }
     }
-
-    catch(error){
-
-        console.log("PASSPORT ERROR");
-
-        console.log(error);
-
-        return done(error,null);
-
-    }
-
-}
   )
 );
 
