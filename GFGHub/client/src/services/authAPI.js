@@ -2,6 +2,7 @@ import axios from "../utils/api";
 
 const authAPI = {
     login: () => {
+        console.log(import.meta.env.VITE_BACKEND_URL);
         window.location.href =
             `${import.meta.env
                 .VITE_BACKEND_URL
