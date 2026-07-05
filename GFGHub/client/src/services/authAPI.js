@@ -10,7 +10,7 @@ const authAPI = {
 
     logout: async () => {
         localStorage.removeItem(
-            "token"
+            "gfghub_token"
         );
     },
 

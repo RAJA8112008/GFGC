@@ -13,6 +13,7 @@
 
   "host_permissions": [
     "https://gfgc-xavx.onrender.com/*",
+    "http://localhost:5001/*",
     "https://www.geeksforgeeks.org/*"
   ],
 
@@ -28,7 +29,8 @@
     {
       "matches": [
         "*://*.geeksforgeeks.org/*",
-        "https://gfgc-theta.vercel.app/*"
+        "https://gfgc-theta.vercel.app/*",
+        "http://localhost:5173/*"
       ],
       "js": [
         "dist/content.js"
@@ -47,7 +49,8 @@
 
   "externally_connectable": {
     "matches": [
-      "https://gfgc-theta.vercel.app/*"
+      "https://gfgc-theta.vercel.app/*",
+      "http://localhost:5173/*"
     ]
   }
-}
+}

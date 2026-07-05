@@ -81,9 +81,12 @@ router.post("/", async (req, res) => {
 
     const filePath = `${folder}/${safeProblemName}.${ext}`;
 
+    const urlParts = repo.repoUrl.split("/");
+    const repoOwner = urlParts[urlParts.length - 2];
+
     const commit = await commitFile(
       octokit,
-      req.user.username,
+      repoOwner,
       repo.repoName,
       filePath,
       code,

@@ -153,31 +153,49 @@ function createPushButton(container) {
 
 function extractProblemName() {
   try {
-    // Preferred: from URL slug
-    // Example: /problems/reverse-a-linked-list/1
+    // 1. Try to get the name from page headings first (most accurate)
+    const headingSelectors = [
+      "div[class^='problems_header_content'] h3",
+      ".problem-statement h3",
+      ".problem-tab__name",
+      "div[class^='problem_heading']",
+      "h3[class^='problem_heading']",
+      "div[class*='ProblemName']",
+      "h1"
+    ];
+
+    for (let sel of headingSelectors) {
+      const el = document.querySelector(sel);
+      if (el && el.innerText && el.innerText.trim()) {
+        return el.innerText.trim();
+      }
+    }
+
+    // 2. Try document title
+    if (document.title) {
+      const titleMatch = document.title.split(/\||-/)[0].trim();
+      if (titleMatch && !titleMatch.toLowerCase().includes("geeksforgeeks") && !titleMatch.toLowerCase().includes("practice")) {
+        return titleMatch;
+      }
+    }
+
+    // 3. Fallback: from URL slug
+    // Example: /problems/reverse-a-linked-list/1 or /problems/key-pair5616/1
     const parts = location.pathname.split("/");
     const slugIndex = parts.indexOf("problems") + 1;
 
     if (slugIndex > 0 && parts[slugIndex]) {
       let slug = parts[slugIndex];
-      // Remove trailing random digits (e.g., -1587115621)
-      slug = slug.replace(/-\d+$/, "");
+      // Remove trailing digits with or without hyphen (e.g., -1587115621 or 5616)
+      slug = slug.replace(/-?\d+$/, "");
       
       return slug
         .split("-")
+        .filter(word => word.length > 0)
         .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
         .join(" ");
     }
 
-    // Fallback from page headings
-    const heading =
-      document.querySelector(".problem-statement h3") ||
-      document.querySelector(".problem-tab__name") ||
-      document.querySelector("h1");
-
-    if (heading?.innerText?.trim()) {
-      return heading.innerText.trim();
-    }
   } catch (e) {
     console.error("extractProblemName error:", e);
   }
@@ -305,17 +323,27 @@ function initWhenReady() {
     return;
   }
 
-  // Always mount the UI on problem pages
-  const tryMount = () => {
-    if (document.body) {
+  // Wait for the success message to appear before mounting the UI
+  const checkSuccess = () => {
+    if (document.getElementById(CONTAINER_ID)) return; // Already mounted
+
+    const text = document.body.innerText || "";
+    // Common GFG success texts
+    if (
+      text.includes("Problem Solved Successfully") ||
+      text.includes("Correct Answer") ||
+      text.includes("Attempt Successful")
+    ) {
       mountUI();
     }
   };
 
   if (document.readyState === "loading") {
-    window.addEventListener("DOMContentLoaded", tryMount);
+    window.addEventListener("DOMContentLoaded", () => {
+      setInterval(checkSuccess, 2000);
+    });
   } else {
-    tryMount();
+    setInterval(checkSuccess, 2000);
   }
 }
 

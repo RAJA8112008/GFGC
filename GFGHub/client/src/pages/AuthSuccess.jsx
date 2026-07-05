@@ -1,10 +1,12 @@
 import { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 
 const BACKEND_URL = (import.meta.env.VITE_BACKEND_URL || "https://gfgc-xavx.onrender.com/api").replace(/\/api\/?$/, "");
 export default function AuthSuccess() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { setToken } = useAuth();
 
     useEffect(() => {
     const handleAuth = async () => {
@@ -36,21 +38,24 @@ export default function AuthSuccess() {
       console.log("Token from URL:", token);
 
       if (token) {
-        // Save token in frontend localStorage
+        // Save token in frontend localStorage AND update React state
         localStorage.setItem("gfghub_token", token);
-        // Send token to extension also
-        if (window.chrome?.runtime) {
-          chrome.runtime.sendMessage(
-            "gpbhnakdinjgcpblbcgcdaacjknhpenb",
-            { type: "SAVE_TOKEN", token },
-            (response) => {
-              console.log("Extension save response:", response);
-              navigate("/dashboard");
-            }
-          );
-        } else {
-          navigate("/dashboard");
+        setToken(token);
+        // Send token to extension also if available (non-blocking)
+        if (window.chrome?.runtime?.sendMessage) {
+          try {
+            chrome.runtime.sendMessage(
+              "gpbhnakdinjgcpblbcgcdaacjknhpenb",
+              { type: "SAVE_TOKEN", token },
+              (response) => {
+                console.log("Extension save response:", response);
+              }
+            );
+          } catch (e) {
+            console.error("Error sending token to extension:", e);
+          }
         }
+        navigate("/dashboard");
         return;
       }
 
@@ -58,13 +63,14 @@ export default function AuthSuccess() {
       navigate("/login");
     };
     handleAuth();
-  }, [navigate, location]);
+  }, [navigate, location, setToken]);
 
   return (
-    <div style={{ padding: "20px", fontSize: "18px" }}>
-      Logging in...
+    <div className="min-h-screen flex items-center justify-center bg-slate-950">
+      <div className="flex flex-col items-center gap-4">
+        <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
+        <p className="text-slate-400 text-lg">Logging in...</p>
+      </div>
     </div>
   );
 }
-
-
