@@ -7,29 +7,53 @@ const router = express.Router();
 
 router.get("/github", passport.authenticate("github"));
 
-router.get(
-  "/github/callback",
-  passport.authenticate("github", {
-    session: false,
-    failureRedirect: "/api/auth/github/failure",
-  }),
-  async (req, res) => {
-    try {
-      const token = generateToken(req.user._id);
+router.get("/github/callback", (req, res, next) => {
 
-      res.redirect(
-        `${process.env.CLIENT_ORIGIN}/auth-success?token=${token}`
-      );
-    } catch (error) {
-      console.error("OAuth Callback Error:", error);
-      res.status(500).json({
-        success: false,
-        message: error.message,
-      });
+  passport.authenticate(
+    "github",
+    { session: false },
+    async (err, user, info) => {
+
+      console.log("========== GITHUB CALLBACK ==========");
+      console.log("ERR:", err);
+      console.log("USER:", user);
+      console.log("INFO:", info);
+
+      if (err) {
+        return next(err);
+      }
+
+      if (!user) {
+        return res.status(401).json({
+          success:false,
+          info
+        });
+      }
+
+      try {
+
+        const token = generateToken(user._id);
+
+        return res.redirect(
+          `${process.env.CLIENT_ORIGIN}/auth-success?token=${token}`
+        );
+
+      } catch(error){
+
+        console.log(error);
+
+        return res.status(500).json({
+          success:false,
+          message:error.message
+        });
+
+      }
+
     }
-  }
-);
 
+  )(req,res,next);
+
+});
 router.get("/github/failure", (req, res) => {
   res.status(500).json({
     success: false,
