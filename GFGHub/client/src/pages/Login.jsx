@@ -4,7 +4,7 @@ import { FaGithub } from "react-icons/fa";
 const Login = () => {
   const handleLogin = () => {
     // VITE_BACKEND_URL ends with /api, so strip that to get the base
-    const backendBase = (import.meta.env.VITE_BACKEND_URL || "https://gfgc-2.onrender.com/api").replace(/\/api\/?$/, "");
+    const backendBase = (import.meta.env.VITE_BACKEND_URL || "https://gfgc-xavx.onrender.com/api").replace(/\/api\/?$/, "");
     window.location.href = `${backendBase}/api/auth/github`;
   };
 

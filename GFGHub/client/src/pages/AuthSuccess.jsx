@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 
-const BACKEND_URL = (import.meta.env.VITE_BACKEND_URL || "https://gfgc-2.onrender.com/api").replace(/\/api\/?$/, "");
+const BACKEND_URL = (import.meta.env.VITE_BACKEND_URL || "https://gfgc-xavx.onrender.com/api").replace(/\/api\/?$/, "");
 export default function AuthSuccess() {
   const navigate = useNavigate();
   const location = useLocation();
