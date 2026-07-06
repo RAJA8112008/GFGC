@@ -17,9 +17,24 @@ import "./config/passport.js";
 
 const app = express();
 
+const allowedOrigins = [
+  process.env.CLIENT_ORIGIN,
+  "https://gfgc-tawny.vercel.app",
+  `chrome-extension://${process.env.EXTENSION_ID}`,
+];
+
 app.use(
   cors({
-    origin: true,
+    origin(origin, callback) {
+      // Allow requests with no Origin header (e.g. curl/Postman)
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      return callback(new Error("Not allowed by CORS"));
+    },
     credentials: true,
   })
 );

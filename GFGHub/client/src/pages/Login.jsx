@@ -4,7 +4,7 @@ import { FaGithub } from "react-icons/fa";
 const Login = () => {
   const handleLogin = () => {
     // VITE_BACKEND_URL ends with /api, so strip that to get the base
-    const backendBase = (import.meta.env.VITE_BACKEND_URL || "https://gfgc-xavx.onrender.com/api").replace(/\/api\/?$/, "");
+    const backendBase = (import.meta.env.VITE_BACKEND_URL || "https://gfgc-2.onrender.com/api").replace(/\/api\/?$/, "");
     window.location.href = `${backendBase}/api/auth/github`;
   };
 
@@ -16,7 +16,7 @@ const Login = () => {
 
       {/* Login Card */}
       <div className="relative z-10 w-full max-w-md mx-4 p-8 rounded-2xl bg-slate-900/80 border border-slate-800 backdrop-blur-xl shadow-2xl transition-all duration-300 hover:border-slate-700/80">
-        
+
         {/* Brand Header */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-tr from-blue-600 to-emerald-500 text-white font-bold text-3xl shadow-lg shadow-blue-500/20 mb-4">
