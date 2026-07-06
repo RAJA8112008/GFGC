@@ -1,4 +1,4 @@
-const BACKEND_URL = "http://localhost:5001";
+const BACKEND_URL = "https://gfgc-xavx.onrender.com";
 
 export const loginWithGithub = () => {
   chrome.tabs.create({
