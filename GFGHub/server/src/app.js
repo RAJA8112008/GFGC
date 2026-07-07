@@ -16,29 +16,34 @@ import dashboardRoutes from "./routes/dashboardRoutes.js";
 import "./config/passport.js";
 
 const app = express();
-
-const allowedOrigins = [
-  process.env.CLIENT_ORIGIN,
-  "https://gfgc-tawny.vercel.app",
-  `chrome-extension://${process.env.EXTENSION_ID}`,
-];
-
+app.set("trust proxy", 1);
 app.use(
   cors({
     origin(origin, callback) {
-      // Allow requests with no Origin header (e.g. curl/Postman)
+      console.log("Origin:", origin);
+
       if (!origin) return callback(null, true);
 
-      if (allowedOrigins.includes(origin)) {
+      const allowedOrigins = [
+        process.env.CLIENT_ORIGIN,
+        process.env.FRONTEND_URL,
+        "https://gfgc-tawny.vercel.app",
+        "https://www.geeksforgeeks.org",
+      ];
+
+      if (
+        allowedOrigins.includes(origin) ||
+        origin.startsWith("chrome-extension://")
+      ) {
         return callback(null, true);
       }
 
-      return callback(new Error("Not allowed by CORS"));
+      console.log("Blocked Origin:", origin);
+      callback(new Error("Not allowed by CORS"));
     },
     credentials: true,
   })
 );
-
 app.use(helmet());
 app.use(morgan("dev"));
 app.use(express.json());
