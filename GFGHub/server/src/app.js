@@ -25,15 +25,17 @@ app.use(
       if (!origin) return callback(null, true);
 
       const allowedOrigins = [
-        process.env.CLIENT_ORIGIN,
-        process.env.FRONTEND_URL,
+        process.env.CLIENT_ORIGIN || "http://localhost:5173",
+        process.env.FRONTEND_URL || "http://localhost:5173",
         "https://gfgc-tawny.vercel.app",
         "https://www.geeksforgeeks.org",
+        "http://127.0.0.1:5173",
       ];
 
       if (
         allowedOrigins.includes(origin) ||
-        origin.startsWith("chrome-extension://")
+        origin.startsWith("chrome-extension://") ||
+        origin === "null"
       ) {
         return callback(null, true);
       }

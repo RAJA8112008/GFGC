@@ -2,6 +2,20 @@ import { getToken } from "./authAPI";
 
 const BACKEND_URL = "https://gfgc-xavx.onrender.com";
 
+const parseResponse = async (response) => {
+  const data = await response.json();
+
+  if (response.status === 401) {
+    await chrome.storage.local.remove("jwt");
+  }
+
+  if (!response.ok) {
+    throw new Error(data.message || "Request failed");
+  }
+
+  return data;
+};
+
 
 export const pushSolution = async (payload) => {
   const token = await getToken();
@@ -19,13 +33,7 @@ export const pushSolution = async (payload) => {
     body: JSON.stringify(payload),
   });
 
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message || "Push failed");
-  }
-
-  return data;
+  return parseResponse(response);
 };
 
 export const getStats = async () => {
@@ -41,13 +49,7 @@ export const getStats = async () => {
     },
   });
 
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message || "Failed to load stats");
-  }
-
-  return data;
+  return parseResponse(response);
 };
 
 export const getCurrentUser = async () => {
@@ -61,7 +63,12 @@ export const getCurrentUser = async () => {
     },
   });
 
+  if (response.status === 401) {
+    await chrome.storage.local.remove("jwt");
+    return null;
+  }
+
   if (!response.ok) return null;
 
-  return await response.json();
+  return response.json();
 };

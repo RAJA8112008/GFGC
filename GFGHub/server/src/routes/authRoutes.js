@@ -17,9 +17,9 @@ router.get(
     try {
       const token = generateToken(req.user._id);
 
-      res.redirect(
-        `${process.env.CLIENT_ORIGIN}/auth-success?token=${token}`
-      );
+      const clientOrigin =
+        process.env.CLIENT_ORIGIN || process.env.FRONTEND_URL || "http://localhost:5173";
+      res.redirect(`${clientOrigin}/auth-success?token=${token}`);
     } catch (error) {
       console.error("OAuth Callback Error:", error);
       res.status(500).json({

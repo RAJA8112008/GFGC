@@ -2,10 +2,8 @@ import axios from "../utils/api";
 
 const authAPI = {
     login: () => {
-        window.location.href =
-            `${import.meta.env
-                .VITE_BACKEND_URL
-            }/auth/github`;
+        const backendBase = import.meta.env.VITE_BACKEND_URL || "/api";
+        window.location.href = `${backendBase.replace(/\/api\/?$/, "")}/api/auth/github`;
     },
 
     logout: async () => {

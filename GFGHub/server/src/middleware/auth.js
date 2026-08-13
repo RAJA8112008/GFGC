@@ -3,9 +3,6 @@ import User from "../models/User.js";
 
 export const protect = async (req, res, next) => {
   try {
-    console.log("Authorization Header:", req.headers.authorization);
-    console.log("All Headers:", req.headers);
-
     let token;
 
     if (
@@ -15,8 +12,6 @@ export const protect = async (req, res, next) => {
       token = req.headers.authorization.split(" ")[1];
     }
 
-    console.log("Extracted Token:", token);
-
     if (!token) {
       return res.status(401).json({
         success: false,
@@ -24,13 +19,10 @@ export const protect = async (req, res, next) => {
       });
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-    console.log("Decoded:", decoded);
+    const jwtSecret = process.env.JWT_SECRET || "gfghub_secret";
+    const decoded = jwt.verify(token, jwtSecret);
 
     req.user = await User.findById(decoded.id);
-
-    console.log("User:", req.user);
 
     if (!req.user) {
       return res.status(401).json({
@@ -41,7 +33,7 @@ export const protect = async (req, res, next) => {
 
     next();
   } catch (error) {
-    console.log(error);
+    console.error("Authentication failed:", error.name);
     return res.status(401).json({
       success: false,
       message: "Invalid token",
