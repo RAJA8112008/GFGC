@@ -2,5 +2,7 @@ packages:
   - 'client'
   - 'server'
   - 'extension'
+onlyBuiltDependencies:
+  - esbuild
 allowBuilds:
-  esbuild: set this to true or false
+  esbuild: true

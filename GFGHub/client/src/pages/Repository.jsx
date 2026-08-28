@@ -119,7 +119,7 @@ export default function Repository() {
                                 value={selectedExternal}
                                 onChange={(e) => setSelectedExternal(e.target.value)}
                                 className="w-full bg-slate-950 border border-slate-800 text-white rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all appearance-none"
-                                disabled={linkLoading || externalRepos.length === 0}
+                                disabled={linkLoading || !Array.isArray(externalRepos) || externalRepos.length === 0}
                             >
                                 <option value="">Select a repository...</option>
                                 {availableToLink.map(repo => (

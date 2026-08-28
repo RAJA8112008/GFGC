@@ -3,11 +3,11 @@ import axios from '../utils/api';
 const githubAPI = {
     getRepos: async () => {
         const { data } = await axios.get('/github/repos');
-        return data;
+        return Array.isArray(data) ? data : [];
     },
     getExternalRepos: async () => {
         const { data } = await axios.get('/github/external-repos');
-        return data;
+        return Array.isArray(data) ? data : [];
     },
     createRepo: async (payload) => {
         const { data } = await axios.post('/github/repos', payload);

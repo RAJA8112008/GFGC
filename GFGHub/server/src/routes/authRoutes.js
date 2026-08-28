@@ -5,10 +5,22 @@ import { generateToken } from "../utils/generateJWT.js";
 
 const router = express.Router();
 
-router.get("/github", passport.authenticate("github"));
+const ensureGithubAuth = (req, res, next) => {
+  if (!process.env.GITHUB_CLIENT_ID || !process.env.GITHUB_CLIENT_SECRET) {
+    return res.status(503).json({
+      success: false,
+      message:
+        "GitHub OAuth is not configured. Add GITHUB_CLIENT_ID and GITHUB_CLIENT_SECRET to server/.env",
+    });
+  }
+  next();
+};
+
+router.get("/github", ensureGithubAuth, passport.authenticate("github"));
 
 router.get(
   "/github/callback",
+  ensureGithubAuth,
   passport.authenticate("github", {
     session: false,
     failureRedirect: "/api/auth/github/failure",

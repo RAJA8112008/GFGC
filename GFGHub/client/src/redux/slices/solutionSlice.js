@@ -56,7 +56,9 @@ const solutionSlice =
                     fetchSolutions.fulfilled,
                     (state, action) => {
                         state.list =
-                            action.payload;
+                            Array.isArray(action.payload)
+                                ? action.payload
+                                : [];
                         state.status =
                             "succeeded";
                     }
@@ -65,9 +67,12 @@ const solutionSlice =
                 .addCase(
                     addSolution.fulfilled,
                     (state, action) => {
-                        state.list.push(
-                            action.payload.solution
-                        );
+                        const created =
+                            action.payload?.solution ||
+                            action.payload;
+                        if (created) {
+                            state.list.push(created);
+                        }
                     }
                 );
         },

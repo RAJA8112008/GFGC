@@ -1,2 +1,659 @@
-/*! For license information please see content.js.LICENSE.txt */
-(()=>{"use strict";function e(){var n,r,o="function"==typeof Symbol?Symbol:{},i=o.iterator||"@@iterator",a=o.toStringTag||"@@toStringTag";function c(e,o,i,a){var c=o&&o.prototype instanceof s?o:s,l=Object.create(c.prototype);return t(l,"_invoke",function(e,t,o){var i,a,c,s=0,l=o||[],f=!1,d={p:0,n:0,v:n,a:p,f:p.bind(n,4),d:function(e,t){return i=e,a=0,c=n,d.n=t,u}};function p(e,t){for(a=e,c=t,r=0;!f&&s&&!o&&r<l.length;r++){var o,i=l[r],p=d.p,v=i[2];e>3?(o=v===t)&&(c=i[(a=i[4])?5:(a=3,3)],i[4]=i[5]=n):i[0]<=p&&((o=e<2&&p<i[1])?(a=0,d.v=t,d.n=i[1]):p<v&&(o=e<3||i[0]>t||t>v)&&(i[4]=e,i[5]=t,d.n=v,a=0))}if(o||e>1)return u;throw f=!0,t}return function(o,l,v){if(s>1)throw TypeError("Generator is already running");for(f&&1===l&&p(l,v),a=l,c=v;(r=a<2?n:c)||!f;){i||(a?a<3?(a>1&&(d.n=-1),p(a,c)):d.n=c:d.v=c);try{if(s=2,i){if(a||(o="next"),r=i[o]){if(!(r=r.call(i,c)))throw TypeError("iterator result is not an object");if(!r.done)return r;c=r.value,a<2&&(a=0)}else 1===a&&(r=i.return)&&r.call(i),a<2&&(c=TypeError("The iterator does not provide a '"+o+"' method"),a=1);i=n}else if((r=(f=d.n<0)?c:e.call(t,d))!==u)break}catch(e){i=n,a=1,c=e}finally{s=1}}return{value:r,done:f}}}(e,i,a),!0),l}var u={};function s(){}function l(){}function f(){}r=Object.getPrototypeOf;var d=[][i]?r(r([][i]())):(t(r={},i,function(){return this}),r),p=f.prototype=s.prototype=Object.create(d);function v(e){return Object.setPrototypeOf?Object.setPrototypeOf(e,f):(e.__proto__=f,t(e,a,"GeneratorFunction")),e.prototype=Object.create(p),e}return l.prototype=f,t(p,"constructor",f),t(f,"constructor",l),l.displayName="GeneratorFunction",t(f,a,"GeneratorFunction"),t(p),t(p,a,"Generator"),t(p,i,function(){return this}),t(p,"toString",function(){return"[object Generator]"}),(e=function(){return{w:c,m:v}})()}function t(e,n,r,o){var i=Object.defineProperty;try{i({},"",{})}catch(e){i=0}t=function(e,n,r,o){function a(n,r){t(e,n,function(e){return this._invoke(n,r,e)})}n?i?i(e,n,{value:r,enumerable:!o,configurable:!o,writable:!o}):e[n]=r:(a("next",0),a("throw",1),a("return",2))},t(e,n,r,o)}function n(e,t,n,r,o,i,a){try{var c=e[i](a),u=c.value}catch(e){return void n(e)}c.done?t(u):Promise.resolve(u).then(r,o)}var r=function(){var t,r=(t=e().m(function t(){var n;return e().w(function(e){for(;;)switch(e.n){case 0:return e.n=1,chrome.storage.local.get(["jwt"]);case 1:return n=e.v,e.a(2,n.jwt||null)}},t)}),function(){var e=this,r=arguments;return new Promise(function(o,i){var a=t.apply(e,r);function c(e){n(a,o,i,c,u,"next",e)}function u(e){n(a,o,i,c,u,"throw",e)}c(void 0)})});return function(){return r.apply(this,arguments)}}();function o(){var e,t,n="function"==typeof Symbol?Symbol:{},r=n.iterator||"@@iterator",a=n.toStringTag||"@@toStringTag";function c(n,r,o,a){var c=r&&r.prototype instanceof s?r:s,l=Object.create(c.prototype);return i(l,"_invoke",function(n,r,o){var i,a,c,s=0,l=o||[],f=!1,d={p:0,n:0,v:e,a:p,f:p.bind(e,4),d:function(t,n){return i=t,a=0,c=e,d.n=n,u}};function p(n,r){for(a=n,c=r,t=0;!f&&s&&!o&&t<l.length;t++){var o,i=l[t],p=d.p,v=i[2];n>3?(o=v===r)&&(c=i[(a=i[4])?5:(a=3,3)],i[4]=i[5]=e):i[0]<=p&&((o=n<2&&p<i[1])?(a=0,d.v=r,d.n=i[1]):p<v&&(o=n<3||i[0]>r||r>v)&&(i[4]=n,i[5]=r,d.n=v,a=0))}if(o||n>1)return u;throw f=!0,r}return function(o,l,v){if(s>1)throw TypeError("Generator is already running");for(f&&1===l&&p(l,v),a=l,c=v;(t=a<2?e:c)||!f;){i||(a?a<3?(a>1&&(d.n=-1),p(a,c)):d.n=c:d.v=c);try{if(s=2,i){if(a||(o="next"),t=i[o]){if(!(t=t.call(i,c)))throw TypeError("iterator result is not an object");if(!t.done)return t;c=t.value,a<2&&(a=0)}else 1===a&&(t=i.return)&&t.call(i),a<2&&(c=TypeError("The iterator does not provide a '"+o+"' method"),a=1);i=e}else if((t=(f=d.n<0)?c:n.call(r,d))!==u)break}catch(t){i=e,a=1,c=t}finally{s=1}}return{value:t,done:f}}}(n,o,a),!0),l}var u={};function s(){}function l(){}function f(){}t=Object.getPrototypeOf;var d=[][r]?t(t([][r]())):(i(t={},r,function(){return this}),t),p=f.prototype=s.prototype=Object.create(d);function v(e){return Object.setPrototypeOf?Object.setPrototypeOf(e,f):(e.__proto__=f,i(e,a,"GeneratorFunction")),e.prototype=Object.create(p),e}return l.prototype=f,i(p,"constructor",f),i(f,"constructor",l),l.displayName="GeneratorFunction",i(f,a,"GeneratorFunction"),i(p),i(p,a,"Generator"),i(p,r,function(){return this}),i(p,"toString",function(){return"[object Generator]"}),(o=function(){return{w:c,m:v}})()}function i(e,t,n,r){var o=Object.defineProperty;try{o({},"",{})}catch(e){o=0}i=function(e,t,n,r){function a(t,n){i(e,t,function(e){return this._invoke(t,n,e)})}t?o?o(e,t,{value:n,enumerable:!r,configurable:!r,writable:!r}):e[t]=n:(a("next",0),a("throw",1),a("return",2))},i(e,t,n,r)}function a(e,t,n,r,o,i,a){try{var c=e[i](a),u=c.value}catch(e){return void n(e)}c.done?t(u):Promise.resolve(u).then(r,o)}var c=function(){var e,t=(e=o().m(function e(){var t,n,i;return o().w(function(e){for(;;)switch(e.n){case 0:return e.n=1,r();case 1:if(t=e.v){e.n=2;break}throw new Error("Please login first");case 2:return e.n=3,fetch("".concat("https://gfgc-xavx.onrender.com","/api/github/repos"),{headers:{Authorization:"Bearer ".concat(t)}});case 3:return n=e.v,e.n=4,n.json();case 4:if(i=e.v,n.ok){e.n=5;break}throw new Error(i.message||"Failed to load repositories");case 5:return e.a(2,i)}},e)}),function(){var t=this,n=arguments;return new Promise(function(r,o){var i=e.apply(t,n);function c(e){a(i,r,o,c,u,"next",e)}function u(e){a(i,r,o,c,u,"throw",e)}c(void 0)})});return function(){return t.apply(this,arguments)}}();function u(e,t){var n="undefined"!=typeof Symbol&&e[Symbol.iterator]||e["@@iterator"];if(!n){if(Array.isArray(e)||(n=function(e,t){if(e){if("string"==typeof e)return s(e,t);var n={}.toString.call(e).slice(8,-1);return"Object"===n&&e.constructor&&(n=e.constructor.name),"Map"===n||"Set"===n?Array.from(e):"Arguments"===n||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)?s(e,t):void 0}}(e))||t&&e&&"number"==typeof e.length){n&&(e=n);var r=0,o=function(){};return{s:o,n:function(){return r>=e.length?{done:!0}:{done:!1,value:e[r++]}},e:function(e){throw e},f:o}}throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}var i,a=!0,c=!1;return{s:function(){n=n.call(e)},n:function(){var e=n.next();return a=e.done,e},e:function(e){c=!0,i=e},f:function(){try{a||null==n.return||n.return()}finally{if(c)throw i}}}}function s(e,t){(null==t||t>e.length)&&(t=e.length);for(var n=0,r=Array(t);n<t;n++)r[n]=e[n];return r}function l(){var e,t,n="function"==typeof Symbol?Symbol:{},r=n.iterator||"@@iterator",o=n.toStringTag||"@@toStringTag";function i(n,r,o,i){var u=r&&r.prototype instanceof c?r:c,s=Object.create(u.prototype);return f(s,"_invoke",function(n,r,o){var i,c,u,s=0,l=o||[],f=!1,d={p:0,n:0,v:e,a:p,f:p.bind(e,4),d:function(t,n){return i=t,c=0,u=e,d.n=n,a}};function p(n,r){for(c=n,u=r,t=0;!f&&s&&!o&&t<l.length;t++){var o,i=l[t],p=d.p,v=i[2];n>3?(o=v===r)&&(u=i[(c=i[4])?5:(c=3,3)],i[4]=i[5]=e):i[0]<=p&&((o=n<2&&p<i[1])?(c=0,d.v=r,d.n=i[1]):p<v&&(o=n<3||i[0]>r||r>v)&&(i[4]=n,i[5]=r,d.n=v,c=0))}if(o||n>1)return a;throw f=!0,r}return function(o,l,v){if(s>1)throw TypeError("Generator is already running");for(f&&1===l&&p(l,v),c=l,u=v;(t=c<2?e:u)||!f;){i||(c?c<3?(c>1&&(d.n=-1),p(c,u)):d.n=u:d.v=u);try{if(s=2,i){if(c||(o="next"),t=i[o]){if(!(t=t.call(i,u)))throw TypeError("iterator result is not an object");if(!t.done)return t;u=t.value,c<2&&(c=0)}else 1===c&&(t=i.return)&&t.call(i),c<2&&(u=TypeError("The iterator does not provide a '"+o+"' method"),c=1);i=e}else if((t=(f=d.n<0)?u:n.call(r,d))!==a)break}catch(t){i=e,c=1,u=t}finally{s=1}}return{value:t,done:f}}}(n,o,i),!0),s}var a={};function c(){}function u(){}function s(){}t=Object.getPrototypeOf;var d=[][r]?t(t([][r]())):(f(t={},r,function(){return this}),t),p=s.prototype=c.prototype=Object.create(d);function v(e){return Object.setPrototypeOf?Object.setPrototypeOf(e,s):(e.__proto__=s,f(e,o,"GeneratorFunction")),e.prototype=Object.create(p),e}return u.prototype=s,f(p,"constructor",s),f(s,"constructor",u),u.displayName="GeneratorFunction",f(s,o,"GeneratorFunction"),f(p),f(p,o,"Generator"),f(p,r,function(){return this}),f(p,"toString",function(){return"[object Generator]"}),(l=function(){return{w:i,m:v}})()}function f(e,t,n,r){var o=Object.defineProperty;try{o({},"",{})}catch(e){o=0}f=function(e,t,n,r){function i(t,n){f(e,t,function(e){return this._invoke(t,n,e)})}t?o?o(e,t,{value:n,enumerable:!r,configurable:!r,writable:!r}):e[t]=n:(i("next",0),i("throw",1),i("return",2))},f(e,t,n,r)}function d(e,t,n,r,o,i,a){try{var c=e[i](a),u=c.value}catch(e){return void n(e)}c.done?t(u):Promise.resolve(u).then(r,o)}function p(e){return function(){var t=this,n=arguments;return new Promise(function(r,o){var i=e.apply(t,n);function a(e){d(i,r,o,a,c,"next",e)}function c(e){d(i,r,o,a,c,"throw",e)}a(void 0)})}}console.log("🚀 GFGHub content script loaded1");var v="gfghub-repo-select",y="gfghub-floating-container";function h(){return m.apply(this,arguments)}function m(){return(m=p(l().m(function e(){return l().w(function(e){for(;;)if(0===e.n)return e.a(2,new Promise(function(e){chrome.storage.local.get(["savedRepoId"],function(t){e(t.savedRepoId||"")})}))},e)}))).apply(this,arguments)}function b(e){return g.apply(this,arguments)}function g(){return(g=p(l().m(function e(t){return l().w(function(e){for(;;)if(0===e.n)return e.a(2,new Promise(function(e){chrome.storage.local.set({savedRepoId:t},function(){e()})}))},e)}))).apply(this,arguments)}function w(){return(w=p(l().m(function e(t){var n,r,o,i,a;return l().w(function(e){for(;;)switch(e.p=e.n){case 0:return(n=document.createElement("select")).id=v,n.style.padding="10px",n.style.borderRadius="8px",n.style.border="1px solid #d1d5db",n.style.fontSize="14px",n.style.marginRight="10px",n.style.minWidth="220px",n.style.background="#fff",(r=document.createElement("option")).value="",r.textContent="Select repository",n.appendChild(r),e.p=1,e.n=2,c();case 2:return o=e.v,e.n=3,h();case 3:i=e.v,console.log("GFGHub repos response:",o),o.forEach(function(e){var t=document.createElement("option");t.value=e._id,t.textContent=e.repoName,n.appendChild(t)}),i&&(n.value=i),n.addEventListener("change",p(l().m(function e(){return l().w(function(e){for(;;)switch(e.n){case 0:return e.n=1,b(n.value);case 1:return e.a(2)}},e)}))),e.n=5;break;case 4:e.p=4,a=e.v,console.error("Failed to load repositories:",a);case 5:return t.appendChild(n),e.a(2,n)}},e,null,[[1,4]])}))).apply(this,arguments)}function x(){try{for(var e=0,t=["div[class^='problems_header_content'] h3",".problem-statement h3",".problem-tab__name","div[class^='problem_heading']","h3[class^='problem_heading']","div[class*='ProblemName']","h1"];e<t.length;e++){var n=t[e],r=document.querySelector(n);if(r&&r.innerText&&r.innerText.trim())return r.innerText.trim()}if(document.title){var o=document.title.split(/\||-/)[0].trim();if(o&&!o.toLowerCase().includes("geeksforgeeks")&&!o.toLowerCase().includes("practice"))return o}var i=location.pathname.split("/"),a=i.indexOf("problems")+1;if(a>0&&i[a]){var c=i[a];return(c=c.replace(/-?\d+$/,"")).split("-").filter(function(e){return e.length>0}).map(function(e){return e.charAt(0).toUpperCase()+e.slice(1)}).join(" ")}}catch(e){console.error("extractProblemName error:",e)}return"Untitled Problem"}function G(){try{var e=document.body.innerText;if(/hard/i.test(e))return"Hard";if(/medium/i.test(e))return"Medium";if(/easy/i.test(e))return"Easy"}catch(e){console.error("extractDifficulty error:",e)}return"Easy"}function j(){try{for(var e=0,t=['[class*="language"]','[class*="lang"]','button[aria-selected="true"]',".tabs__tab.active",".selected"];e<t.length;e++){var n,r=t[e],o=u(document.querySelectorAll(r));try{for(o.s();!(n=o.n()).done;){var i,a=null===(i=n.value.innerText)||void 0===i||null===(i=i.trim())||void 0===i?void 0:i.toLowerCase();if(a){if(a.includes("c++"))return"cpp";if(a.includes("java"))return"java";if(a.includes("python"))return"python";if(a.includes("javascript"))return"javascript";if(a.includes("js"))return"javascript"}}}catch(e){o.e(e)}finally{o.f()}}}catch(e){console.error("extractLanguage error:",e)}return"javascript"}function E(){return new Promise(function(e){var t=function(n){var r;n.source===window&&"GFG_CODE_RESPONSE"===(null===(r=n.data)||void 0===r?void 0:r.type)&&(window.removeEventListener("message",t),e(n.data.code||""))};window.addEventListener("message",t),window.postMessage({type:"GFG_CODE_REQUEST"},"*"),setTimeout(function(){window.removeEventListener("message",t),e("")},2500)})}console.log("🚀 GFGHub content script loaded 2"),console.log("🚀 GFGHub content script loaded3"),function(){if(window.location.hostname.includes("vercel.app")||window.location.hostname.includes("localhost")){if(window.location.pathname.startsWith("/auth-success")){var e=new URLSearchParams(window.location.search).get("token");e&&chrome.storage.local.set({jwt:e},function(){console.log("GFGHub: Token saved successfully from auth-success page.")})}}else if(window.location.pathname.includes("/problems/")){var t=function(){if(!document.getElementById(y)){var e=document.body.innerText||"";(e.includes("Problem Solved Successfully")||e.includes("Correct Answer")||e.includes("Attempt Successful"))&&function(){if(!document.getElementById(y)){var e=document.createElement("div");e.id=y,e.style.position="fixed",e.style.bottom="20px",e.style.right="20px",e.style.zIndex="999999",e.style.display="flex",e.style.alignItems="center",e.style.gap="10px",e.style.background="#ffffff",e.style.padding="12px",e.style.borderRadius="10px",e.style.boxShadow="0 8px 20px rgba(0,0,0,0.15)",function(e){return w.apply(this,arguments)}(e).then(function(){!function(e){var t=document.createElement("button");t.id="gfghub-push-btn",t.textContent="Push to GitHub",t.style.padding="10px 15px",t.style.background="#2563EB",t.style.color="#fff",t.style.border="none",t.style.borderRadius="6px",t.style.cursor="pointer",t.style.fontWeight="600",t.addEventListener("click",p(l().m(function e(){var t,n,r,o,i,a,c,u,s;return l().w(function(e){for(;;)switch(e.p=e.n){case 0:if(e.p=0,n=null===(t=document.getElementById(v))||void 0===t?void 0:t.value){e.n=1;break}return alert("Please select a repository first."),e.a(2);case 1:return console.log("GFGHub: extracting code..."),e.n=2,E();case 2:if(r=e.v,console.log("GFGHub extracted code:",r),r&&r.trim()){e.n=3;break}return alert("Could not extract code from the editor."),e.a(2);case 3:o=x(),i=G(),a=j(),c=location.href,u={code:r,repositoryId:n,problemName:o,difficulty:i,language:a,topic:["GeeksForGeeks"],problemUrl:c},console.log("GFGHub push payload:",u),chrome.runtime.sendMessage({type:"PUSH_CODE",payload:u},function(e){if(console.log("GFGHub background response:",e),chrome.runtime.lastError)return console.error("Runtime message error:",chrome.runtime.lastError),void alert("Failed to talk to extension background script.");e?e.success?alert("Solution pushed successfully!"):alert(e.message||"Push failed."):alert("No response from extension background.")}),e.n=5;break;case 4:e.p=4,s=e.v,console.error("Push button error:",s),alert("Push failed. Check console for details.");case 5:return e.a(2)}},e,null,[[0,4]])}))),e.appendChild(t)}(e)}),document.body.appendChild(e)}}()}};"loading"===document.readyState?window.addEventListener("DOMContentLoaded",function(){setInterval(t,2e3)}):setInterval(t,2e3)}}()})();
+/******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
+/******/ 	var __webpack_modules__ = ({
+
+/***/ "./src/services/authAPI.js"
+/*!*********************************!*\
+  !*** ./src/services/authAPI.js ***!
+  \*********************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getToken: () => (/* binding */ getToken),
+/* harmony export */   loginWithGithub: () => (/* binding */ loginWithGithub),
+/* harmony export */   logout: () => (/* binding */ logout),
+/* harmony export */   saveToken: () => (/* binding */ saveToken)
+/* harmony export */ });
+function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+var BACKEND_URL = "http://localhost:5001";
+var loginWithGithub = function loginWithGithub() {
+  chrome.tabs.create({
+    url: "".concat(BACKEND_URL, "/api/auth/github")
+  });
+};
+var saveToken = /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(token) {
+    return _regenerator().w(function (_context) {
+      while (1) switch (_context.n) {
+        case 0:
+          return _context.a(2, chrome.storage.local.set({
+            jwt: token
+          }));
+      }
+    }, _callee);
+  }));
+  return function saveToken(_x) {
+    return _ref.apply(this, arguments);
+  };
+}();
+var getToken = /*#__PURE__*/function () {
+  var _ref2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2() {
+    var result;
+    return _regenerator().w(function (_context2) {
+      while (1) switch (_context2.n) {
+        case 0:
+          _context2.n = 1;
+          return chrome.storage.local.get(["jwt"]);
+        case 1:
+          result = _context2.v;
+          return _context2.a(2, result.jwt || null);
+      }
+    }, _callee2);
+  }));
+  return function getToken() {
+    return _ref2.apply(this, arguments);
+  };
+}();
+var logout = /*#__PURE__*/function () {
+  var _ref3 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3() {
+    return _regenerator().w(function (_context3) {
+      while (1) switch (_context3.n) {
+        case 0:
+          _context3.n = 1;
+          return chrome.storage.local.remove(["jwt", "savedRepoId"]);
+        case 1:
+          return _context3.a(2);
+      }
+    }, _callee3);
+  }));
+  return function logout() {
+    return _ref3.apply(this, arguments);
+  };
+}();
+
+/***/ },
+
+/***/ "./src/services/githubAPI.js"
+/*!***********************************!*\
+  !*** ./src/services/githubAPI.js ***!
+  \***********************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   createRepository: () => (/* binding */ createRepository),
+/* harmony export */   getRepositories: () => (/* binding */ getRepositories)
+/* harmony export */ });
+/* harmony import */ var _authAPI__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./authAPI */ "./src/services/authAPI.js");
+function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+;
+var BACKEND_URL = "http://localhost:5001";
+var getRepositories = /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
+    var token, response, data;
+    return _regenerator().w(function (_context) {
+      while (1) switch (_context.n) {
+        case 0:
+          _context.n = 1;
+          return (0,_authAPI__WEBPACK_IMPORTED_MODULE_0__.getToken)();
+        case 1:
+          token = _context.v;
+          if (token) {
+            _context.n = 2;
+            break;
+          }
+          throw new Error("Please login first");
+        case 2:
+          _context.n = 3;
+          return fetch("".concat(BACKEND_URL, "/api/github/repos"), {
+            headers: {
+              Authorization: "Bearer ".concat(token)
+            }
+          });
+        case 3:
+          response = _context.v;
+          _context.n = 4;
+          return response.json();
+        case 4:
+          data = _context.v;
+          if (response.ok) {
+            _context.n = 5;
+            break;
+          }
+          throw new Error(data.message || "Failed to load repositories");
+        case 5:
+          return _context.a(2, data);
+      }
+    }, _callee);
+  }));
+  return function getRepositories() {
+    return _ref.apply(this, arguments);
+  };
+}();
+var createRepository = /*#__PURE__*/function () {
+  var _ref2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2(name) {
+    var token, response, data;
+    return _regenerator().w(function (_context2) {
+      while (1) switch (_context2.n) {
+        case 0:
+          _context2.n = 1;
+          return (0,_authAPI__WEBPACK_IMPORTED_MODULE_0__.getToken)();
+        case 1:
+          token = _context2.v;
+          if (token) {
+            _context2.n = 2;
+            break;
+          }
+          throw new Error("Please login first");
+        case 2:
+          _context2.n = 3;
+          return fetch("".concat(BACKEND_URL, "/api/github/repos"), {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer ".concat(token)
+            },
+            body: JSON.stringify({
+              name: name
+            })
+          });
+        case 3:
+          response = _context2.v;
+          _context2.n = 4;
+          return response.json();
+        case 4:
+          data = _context2.v;
+          if (response.ok) {
+            _context2.n = 5;
+            break;
+          }
+          throw new Error(data.message || "Failed to create repository");
+        case 5:
+          return _context2.a(2, data);
+      }
+    }, _callee2);
+  }));
+  return function createRepository(_x) {
+    return _ref2.apply(this, arguments);
+  };
+}();
+
+/***/ }
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	const __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		const cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		const module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		if (!(moduleId in __webpack_modules__)) {
+/******/ 			delete __webpack_module_cache__[moduleId];
+/******/ 			const e = new Error("Cannot find module '" + moduleId + "'");
+/******/ 			e.code = 'MODULE_NOT_FOUND';
+/******/ 			throw e;
+/******/ 		}
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter/value functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			if(Array.isArray(definition)) {
+/******/ 				var i = 0;
+/******/ 				while(i < definition.length) {
+/******/ 					var key = definition[i++];
+/******/ 					var binding = definition[i++];
+/******/ 					if(!__webpack_require__.o(exports, key)) {
+/******/ 						if(binding === 0) {
+/******/ 							Object.defineProperty(exports, key, { enumerable: true, value: definition[i++] });
+/******/ 						} else {
+/******/ 							Object.defineProperty(exports, key, { enumerable: true, get: binding });
+/******/ 						}
+/******/ 					} else if(binding === 0) { i++; }
+/******/ 				}
+/******/ 			} else {
+/******/ 				for(var key in definition) {
+/******/ 					if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 						Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 					}
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/************************************************************************/
+let __webpack_exports__ = {};
+// This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
+(() => {
+/*!************************************!*\
+  !*** ./src/content/gfgDetector.js ***!
+  \************************************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _services_githubAPI_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../services/githubAPI.js */ "./src/services/githubAPI.js");
+function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+console.log("🚀 GFGHub content script loaded1");
+
+var REPO_SELECT_ID = "gfghub-repo-select";
+var BUTTON_ID = "gfghub-push-btn";
+var CONTAINER_ID = "gfghub-floating-container";
+function getSavedRepositoryId() {
+  return _getSavedRepositoryId.apply(this, arguments);
+}
+function _getSavedRepositoryId() {
+  _getSavedRepositoryId = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2() {
+    return _regenerator().w(function (_context2) {
+      while (1) switch (_context2.n) {
+        case 0:
+          return _context2.a(2, new Promise(function (resolve) {
+            chrome.storage.local.get(["savedRepoId"], function (result) {
+              resolve(result.savedRepoId || "");
+            });
+          }));
+      }
+    }, _callee2);
+  }));
+  return _getSavedRepositoryId.apply(this, arguments);
+}
+console.log("🚀 GFGHub content script loaded 2");
+function saveRepositoryId(_x) {
+  return _saveRepositoryId.apply(this, arguments);
+}
+function _saveRepositoryId() {
+  _saveRepositoryId = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3(id) {
+    return _regenerator().w(function (_context3) {
+      while (1) switch (_context3.n) {
+        case 0:
+          return _context3.a(2, new Promise(function (resolve) {
+            chrome.storage.local.set({
+              savedRepoId: id
+            }, function () {
+              resolve();
+            });
+          }));
+      }
+    }, _callee3);
+  }));
+  return _saveRepositoryId.apply(this, arguments);
+}
+function createRepoDropdown(_x2) {
+  return _createRepoDropdown.apply(this, arguments);
+}
+function _createRepoDropdown() {
+  _createRepoDropdown = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee5(container) {
+    var select, defaultOption, repos, savedRepoId, _t2;
+    return _regenerator().w(function (_context5) {
+      while (1) switch (_context5.p = _context5.n) {
+        case 0:
+          select = document.createElement("select");
+          select.id = REPO_SELECT_ID;
+          select.style.padding = "10px";
+          select.style.borderRadius = "8px";
+          select.style.border = "1px solid #d1d5db";
+          select.style.fontSize = "14px";
+          select.style.marginRight = "10px";
+          select.style.minWidth = "220px";
+          select.style.background = "#fff";
+          defaultOption = document.createElement("option");
+          defaultOption.value = "";
+          defaultOption.textContent = "Select repository";
+          select.appendChild(defaultOption);
+          _context5.p = 1;
+          _context5.n = 2;
+          return (0,_services_githubAPI_js__WEBPACK_IMPORTED_MODULE_0__.getRepositories)();
+        case 2:
+          repos = _context5.v;
+          _context5.n = 3;
+          return getSavedRepositoryId();
+        case 3:
+          savedRepoId = _context5.v;
+          console.log("GFGHub repos response:", repos);
+          repos.forEach(function (repo) {
+            var option = document.createElement("option");
+            option.value = repo._id;
+            option.textContent = repo.repoName;
+            select.appendChild(option);
+          });
+          if (savedRepoId) {
+            select.value = savedRepoId;
+          }
+          select.addEventListener("change", /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee4() {
+            return _regenerator().w(function (_context4) {
+              while (1) switch (_context4.n) {
+                case 0:
+                  _context4.n = 1;
+                  return saveRepositoryId(select.value);
+                case 1:
+                  return _context4.a(2);
+              }
+            }, _callee4);
+          })));
+          _context5.n = 5;
+          break;
+        case 4:
+          _context5.p = 4;
+          _t2 = _context5.v;
+          console.error("Failed to load repositories:", _t2);
+        case 5:
+          container.appendChild(select);
+          return _context5.a(2, select);
+      }
+    }, _callee5, null, [[1, 4]]);
+  }));
+  return _createRepoDropdown.apply(this, arguments);
+}
+console.log("🚀 GFGHub content script loaded3");
+function createPushButton(container) {
+  var btn = document.createElement("button");
+  btn.id = BUTTON_ID;
+  btn.textContent = "Push to GitHub";
+  btn.style.padding = "10px 15px";
+  btn.style.background = "#2563EB";
+  btn.style.color = "#fff";
+  btn.style.border = "none";
+  btn.style.borderRadius = "6px";
+  btn.style.cursor = "pointer";
+  btn.style.fontWeight = "600";
+  btn.addEventListener("click", /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
+    var _document$getElementB, repositoryId, code, problemName, difficulty, language, problemUrl, payload, _t;
+    return _regenerator().w(function (_context) {
+      while (1) switch (_context.p = _context.n) {
+        case 0:
+          _context.p = 0;
+          repositoryId = (_document$getElementB = document.getElementById(REPO_SELECT_ID)) === null || _document$getElementB === void 0 ? void 0 : _document$getElementB.value;
+          if (repositoryId) {
+            _context.n = 1;
+            break;
+          }
+          alert("Please select a repository first.");
+          return _context.a(2);
+        case 1:
+          console.log("GFGHub: extracting code...");
+          _context.n = 2;
+          return getCurrentCode();
+        case 2:
+          code = _context.v;
+          console.log("GFGHub extracted code:", code);
+          if (!(!code || !code.trim())) {
+            _context.n = 3;
+            break;
+          }
+          alert("Could not extract code from the editor.");
+          return _context.a(2);
+        case 3:
+          problemName = extractProblemName();
+          difficulty = extractDifficulty();
+          language = extractLanguage();
+          problemUrl = location.href;
+          payload = {
+            code: code,
+            repositoryId: repositoryId,
+            problemName: problemName,
+            difficulty: difficulty,
+            language: language,
+            topic: ["GeeksForGeeks"],
+            problemUrl: problemUrl
+          };
+          console.log("GFGHub push payload:", payload);
+          chrome.runtime.sendMessage({
+            type: "PUSH_CODE",
+            payload: payload
+          }, function (response) {
+            console.log("GFGHub background response:", response);
+            if (chrome.runtime.lastError) {
+              console.error("Runtime message error:", chrome.runtime.lastError);
+              alert("Failed to talk to extension background script.");
+              return;
+            }
+            if (!response) {
+              alert("No response from extension background.");
+              return;
+            }
+            if (response.success) {
+              alert("Solution pushed successfully!");
+            } else {
+              alert(response.message || "Push failed.");
+            }
+          });
+          _context.n = 5;
+          break;
+        case 4:
+          _context.p = 4;
+          _t = _context.v;
+          console.error("Push button error:", _t);
+          alert("Push failed. Check console for details.");
+        case 5:
+          return _context.a(2);
+      }
+    }, _callee, null, [[0, 4]]);
+  })));
+  container.appendChild(btn);
+}
+
+/* ---------------------------
+   Problem metadata extractors
+---------------------------- */
+
+function extractProblemName() {
+  try {
+    // 1. Try to get the name from page headings first (most accurate)
+    var headingSelectors = ["div[class^='problems_header_content'] h3", ".problem-statement h3", ".problem-tab__name", "div[class^='problem_heading']", "h3[class^='problem_heading']", "div[class*='ProblemName']", "h1"];
+    for (var _i = 0, _headingSelectors = headingSelectors; _i < _headingSelectors.length; _i++) {
+      var sel = _headingSelectors[_i];
+      var el = document.querySelector(sel);
+      if (el && el.innerText && el.innerText.trim()) {
+        return el.innerText.trim();
+      }
+    }
+
+    // 2. Try document title
+    if (document.title) {
+      var titleMatch = document.title.split(/\||-/)[0].trim();
+      if (titleMatch && !titleMatch.toLowerCase().includes("geeksforgeeks") && !titleMatch.toLowerCase().includes("practice")) {
+        return titleMatch;
+      }
+    }
+
+    // 3. Fallback: from URL slug
+    // Example: /problems/reverse-a-linked-list/1 or /problems/key-pair5616/1
+    var parts = location.pathname.split("/");
+    var slugIndex = parts.indexOf("problems") + 1;
+    if (slugIndex > 0 && parts[slugIndex]) {
+      var slug = parts[slugIndex];
+      // Remove trailing digits with or without hyphen (e.g., -1587115621 or 5616)
+      slug = slug.replace(/-?\d+$/, "");
+      return slug.split("-").filter(function (word) {
+        return word.length > 0;
+      }).map(function (word) {
+        return word.charAt(0).toUpperCase() + word.slice(1);
+      }).join(" ");
+    }
+  } catch (e) {
+    console.error("extractProblemName error:", e);
+  }
+  return "Untitled Problem";
+}
+function extractDifficulty() {
+  try {
+    var text = document.body.innerText;
+    if (/hard/i.test(text)) return "Hard";
+    if (/medium/i.test(text)) return "Medium";
+    if (/easy/i.test(text)) return "Easy";
+  } catch (e) {
+    console.error("extractDifficulty error:", e);
+  }
+  return "Easy";
+}
+function extractLanguage() {
+  try {
+    // Try active language label / selected tab / button text
+    var selectors = ['[class*="language"]', '[class*="lang"]', 'button[aria-selected="true"]', '.tabs__tab.active', '.selected'];
+    for (var _i2 = 0, _selectors = selectors; _i2 < _selectors.length; _i2++) {
+      var sel = _selectors[_i2];
+      var nodes = document.querySelectorAll(sel);
+      var _iterator = _createForOfIteratorHelper(nodes),
+        _step;
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var _node$innerText;
+          var node = _step.value;
+          var txt = (_node$innerText = node.innerText) === null || _node$innerText === void 0 || (_node$innerText = _node$innerText.trim()) === null || _node$innerText === void 0 ? void 0 : _node$innerText.toLowerCase();
+          if (!txt) continue;
+          if (txt.includes("c++")) return "cpp";
+          if (txt.includes("java")) return "java";
+          if (txt.includes("python")) return "python";
+          if (txt.includes("javascript")) return "javascript";
+          if (txt.includes("js")) return "javascript";
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+    }
+  } catch (e) {
+    console.error("extractLanguage error:", e);
+  }
+  return "javascript";
+}
+
+/* ---------------------------
+   Strong code extractor
+---------------------------- */
+
+function getCurrentCode() {
+  return new Promise(function (resolve) {
+    var _listener = function listener(event) {
+      var _event$data;
+      if (event.source === window && ((_event$data = event.data) === null || _event$data === void 0 ? void 0 : _event$data.type) === "GFG_CODE_RESPONSE") {
+        window.removeEventListener("message", _listener);
+        resolve(event.data.code || "");
+      }
+    };
+    window.addEventListener("message", _listener);
+    window.postMessage({
+      type: "GFG_CODE_REQUEST"
+    }, "*");
+    setTimeout(function () {
+      window.removeEventListener("message", _listener);
+      resolve("");
+    }, 2500);
+  });
+}
+
+/* ---------------------------
+   UI bootstrap
+---------------------------- */
+
+function mountUI() {
+  if (document.getElementById(CONTAINER_ID)) return;
+  var container = document.createElement("div");
+  container.id = CONTAINER_ID;
+  container.style.position = "fixed";
+  container.style.bottom = "20px";
+  container.style.right = "20px";
+  container.style.zIndex = "999999";
+  container.style.display = "flex";
+  container.style.alignItems = "center";
+  container.style.gap = "10px";
+  container.style.background = "#ffffff";
+  container.style.padding = "12px";
+  container.style.borderRadius = "10px";
+  container.style.boxShadow = "0 8px 20px rgba(0,0,0,0.15)";
+  createRepoDropdown(container).then(function () {
+    createPushButton(container);
+  });
+  document.body.appendChild(container);
+}
+function initWhenReady() {
+  // Check if we are on the frontend website (Vercel or localhost)
+  if (window.location.hostname.includes("vercel.app") || window.location.hostname.includes("localhost")) {
+    if (window.location.pathname.startsWith("/auth-success")) {
+      var urlParams = new URLSearchParams(window.location.search);
+      var token = urlParams.get("token");
+      if (token) {
+        chrome.storage.local.set({
+          jwt: token
+        }, function () {
+          console.log("GFGHub: Token saved successfully from auth-success page.");
+        });
+      }
+    }
+    return; // Exit early — not a GFG problem page
+  }
+
+  // Only activate on GFG problem pages
+  if (!window.location.pathname.includes("/problems/")) {
+    return;
+  }
+
+  // Wait for the success message to appear before mounting the UI
+  var checkSuccess = function checkSuccess() {
+    if (document.getElementById(CONTAINER_ID)) return; // Already mounted
+
+    var text = document.body.innerText || "";
+    // Common GFG success texts
+    if (text.includes("Problem Solved Successfully") || text.includes("Correct Answer") || text.includes("Attempt Successful")) {
+      mountUI();
+    }
+  };
+  if (document.readyState === "loading") {
+    window.addEventListener("DOMContentLoaded", function () {
+      setInterval(checkSuccess, 2000);
+    });
+  } else {
+    setInterval(checkSuccess, 2000);
+  }
+}
+initWhenReady();
+})();
+
+/******/ })()
+;

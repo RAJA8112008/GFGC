@@ -4,6 +4,7 @@ import { formatDate } from '../../utils/helperFunctions';
 
 const SolutionTable = () => {
     const { list } = useSelector((state) => state.solution);
+    const solutions = Array.isArray(list) ? list : [];
 
     return (
         <div className="overflow-x-auto">
@@ -18,7 +19,7 @@ const SolutionTable = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {list.map((s) => (
+                    {solutions.map((s) => (
                         <tr key={s._id} className="border-t">
                             <td className="p-2">{s.problemName}</td>
                             <td className="p-2">{s.difficulty}</td>

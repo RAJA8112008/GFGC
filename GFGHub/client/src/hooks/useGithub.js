@@ -10,7 +10,7 @@ export const useGithub = () => {
         setLoading(true);
         try {
             const data = await githubAPI.getRepos();
-            setRepos(data);
+            setRepos(Array.isArray(data) ? data : []);
         } catch (error) {
             console.error("Failed to fetch repos", error);
         } finally {
@@ -22,7 +22,7 @@ export const useGithub = () => {
         setLoading(true);
         try {
             const data = await githubAPI.getExternalRepos();
-            setExternalRepos(data);
+            setExternalRepos(Array.isArray(data) ? data : []);
         } catch (error) {
             console.error("Failed to fetch external repos", error);
         } finally {

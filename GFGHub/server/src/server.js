@@ -21,5 +21,8 @@ mongoose
     });
   })
   .catch((err) => {
-    console.log(err);
+    console.error("MongoDB connection failed:", err.message);
+    app.listen(PORT, () => {
+      console.log(`Server Running on Port ${PORT} (without database)`);
+    });
   });

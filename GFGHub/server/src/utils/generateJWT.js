@@ -1,11 +1,9 @@
 import jwt from "jsonwebtoken";
 
 export const generateToken = (id) => {
-  if (!process.env.JWT_SECRET) {
-    throw new Error("JWT_SECRET is missing in environment variables");
-  }
+  const jwtSecret = process.env.JWT_SECRET || "gfghub_secret";
 
-  return jwt.sign({ id }, process.env.JWT_SECRET, {
+  return jwt.sign({ id }, jwtSecret, {
     expiresIn: "7d",
   });
 };

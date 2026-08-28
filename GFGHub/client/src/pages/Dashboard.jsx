@@ -28,14 +28,12 @@ const Dashboard = () => {
     const fetchStats = async () => {
       setFetching(true);
       try {
-        const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}/dashboard/stats`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const backendBase = (import.meta.env.VITE_BACKEND_URL || "/api").replace(/\/api\/?$/, "");
+        const response = await fetch(`${backendBase}/api/dashboard/stats`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         if (!response.ok) {
           console.error("Failed to fetch stats", response.status);
           setStats({ error: true });

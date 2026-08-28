@@ -1,6 +1,6 @@
 import { getToken } from "./authAPI";
 
-const BACKEND_URL = "https://gfgc-xavx.onrender.com";
+const BACKEND_URL = "http://localhost:5001";
 
 const parseResponse = async (response) => {
   const data = await response.json();
