@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "GFGHub Sync",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "Extract GeeksforGeeks solutions and push them to GitHub",
   "permissions": [
     "storage",
@@ -12,7 +12,11 @@
   "host_permissions": [
     "https://gfgc-xavx.onrender.com/*",
     "http://localhost:5001/*",
-    "https://www.geeksforgeeks.org/*"
+    "http://localhost:5173/*",
+    "http://127.0.0.1:5173/*",
+    "https://gfgc-tawny.vercel.app/*",
+    "*://*.geeksforgeeks.org/*",
+    "*://geeksforgeeks.org/*"
   ],
   "background": {
     "service_worker": "dist/background.js"
@@ -24,12 +28,15 @@
     {
       "matches": [
         "*://*.geeksforgeeks.org/*",
+        "*://geeksforgeeks.org/*",
         "https://gfgc-tawny.vercel.app/*",
-        "http://localhost:5173/*"
+        "http://localhost:5173/*",
+        "http://127.0.0.1:5173/*"
       ],
       "js": [
         "dist/content.js"
-      ]
+      ],
+      "run_at": "document_idle"
     },
     {
       "matches": [
@@ -38,7 +45,8 @@
       "js": [
         "dist/mainWorld.js"
       ],
-      "world": "MAIN"
+      "world": "MAIN",
+      "run_at": "document_start"
     }
   ],
   "externally_connectable": {

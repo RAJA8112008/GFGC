@@ -125,3 +125,125 @@ window.addEventListener("message", (event) => {
     );
   }
 });
+
+function getRequestUrl(input) {
+  try {
+    if (typeof input === "string") return input;
+    if (input instanceof URL) return input.href;
+    if (input && typeof input.url === "string") return input.url;
+  } catch (e) {}
+  return "";
+}
+
+function isSubmitRequest(url) {
+  const value = String(url || "").toLowerCase();
+  if (!value) return false;
+  return (
+    value.includes("practiceapi") && (value.includes("submit") || value.includes("submission")) ||
+    value.includes("/submit") ||
+    value.includes("/submissions")
+  );
+}
+
+function isAcceptedResult(data) {
+  if (!data || typeof data !== "object") return false;
+
+  if (
+    data.view_mode === "correct" ||
+    data.sub_status === 1 ||
+    data.sub_status === "1" ||
+    String(data.status || "").toLowerCase() === "correct" ||
+    String(data.result || "").toLowerCase() === "correct"
+  ) {
+    return true;
+  }
+
+  const message = String(data.message || data.msg || "");
+  if (/solved successfully|correct answer|congratulations|all test cases passed/i.test(message)) {
+    return true;
+  }
+
+  const nested = data.data;
+  if (nested && typeof nested === "object") {
+    return isAcceptedResult(nested);
+  }
+
+  return false;
+}
+
+function notifyAccepted(payload) {
+  window.postMessage(
+    {
+      type: "GFG_SUBMIT_SUCCESS",
+      payload: payload || null
+    },
+    "*"
+  );
+}
+
+const originalFetch = window.fetch;
+window.fetch = async function (...args) {
+  const response = await originalFetch.apply(this, args);
+  try {
+    const url = getRequestUrl(args[0]);
+    if (isSubmitRequest(url) && response.clone) {
+      response
+        .clone()
+        .json()
+        .then((data) => {
+          if (isAcceptedResult(data)) {
+            console.log("GFGHub mainWorld: accepted submit via fetch");
+            notifyAccepted(data);
+          }
+        })
+        .catch(() => {});
+    }
+  } catch (e) {}
+  return response;
+};
+
+function notifyUrlChange() {
+  window.postMessage(
+    {
+      type: "GFG_URL_CHANGE",
+      href: location.href
+    },
+    "*"
+  );
+}
+
+const originalPushState = history.pushState;
+history.pushState = function (...args) {
+  originalPushState.apply(this, args);
+  notifyUrlChange();
+};
+
+const originalReplaceState = history.replaceState;
+history.replaceState = function (...args) {
+  originalReplaceState.apply(this, args);
+  notifyUrlChange();
+};
+
+window.addEventListener("popstate", notifyUrlChange);
+
+const originalOpen = XMLHttpRequest.prototype.open;
+const originalSend = XMLHttpRequest.prototype.send;
+
+XMLHttpRequest.prototype.open = function (method, url, ...rest) {
+  this._gfghubUrl = url;
+  return originalOpen.call(this, method, url, ...rest);
+};
+
+XMLHttpRequest.prototype.send = function (...args) {
+  this.addEventListener("load", function () {
+    try {
+      if (!isSubmitRequest(this._gfghubUrl)) return;
+      const data = JSON.parse(this.responseText);
+      if (isAcceptedResult(data)) {
+        console.log("GFGHub mainWorld: accepted submit via XHR");
+        notifyAccepted(data);
+      }
+    } catch (e) {}
+  });
+  return originalSend.apply(this, args);
+};

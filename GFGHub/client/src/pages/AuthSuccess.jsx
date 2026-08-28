@@ -41,11 +41,10 @@ export default function AuthSuccess() {
         // Save token in frontend localStorage AND update React state
         localStorage.setItem("gfghub_token", token);
         setToken(token);
-        // Send token to extension also if available (non-blocking)
+        window.postMessage({ type: "GFGHUB_SAVE_TOKEN", token }, "*");
         if (window.chrome?.runtime?.sendMessage) {
           try {
             chrome.runtime.sendMessage(
-              "gpbhnakdinjgcpblbcgcdaacjknhpenb",
               { type: "SAVE_TOKEN", token },
               (response) => {
                 console.log("Extension save response:", response);

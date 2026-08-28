@@ -1,8 +1,9 @@
-const BACKEND_URL = "http://localhost:5001";
+import { getBackendUrl } from "./config";
 
-export const loginWithGithub = () => {
+export const loginWithGithub = async () => {
+  const backendUrl = await getBackendUrl();
   chrome.tabs.create({
-    url: `${BACKEND_URL}/api/auth/github`,
+    url: `${backendUrl}/api/auth/github`,
   });
 };
 
@@ -16,5 +17,5 @@ export const getToken = async () => {
 };
 
 export const logout = async () => {
-  await chrome.storage.local.remove(["jwt", "savedRepoId"]);
+  await chrome.storage.local.remove(["jwt", "savedRepoId", "backendUrl"]);
 };

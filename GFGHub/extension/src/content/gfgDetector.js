@@ -1,10 +1,33 @@
 console.log("🚀 GFGHub content script loaded1");
 
-import { getRepositories } from "../services/githubAPI.js";
-
 const REPO_SELECT_ID = "gfghub-repo-select";
 const BUTTON_ID = "gfghub-push-btn";
 const CONTAINER_ID = "gfghub-floating-container";
+
+let selectedRepoId = "";
+let repoList = [];
+
+function sendToBackground(message, timeoutMs = 20000) {
+  return new Promise((resolve, reject) => {
+    if (!chrome.runtime?.id) {
+      reject(new Error("Extension runtime unavailable"));
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      reject(new Error("Timed out loading repositories"));
+    }, timeoutMs);
+
+    chrome.runtime.sendMessage(message, (response) => {
+      clearTimeout(timer);
+      if (chrome.runtime.lastError) {
+        reject(new Error(chrome.runtime.lastError.message));
+        return;
+      }
+      resolve(response);
+    });
+  });
+}
 
 async function getSavedRepositoryId() {
   return new Promise((resolve) => {
@@ -13,59 +36,103 @@ async function getSavedRepositoryId() {
     });
   });
 }
-console.log("🚀 GFGHub content script loaded 2");
+
 async function saveRepositoryId(id) {
+  selectedRepoId = id;
   return new Promise((resolve) => {
-    chrome.storage.local.set({ savedRepoId: id }, () => {
-      resolve();
-    });
+    chrome.storage.local.set({ savedRepoId: id }, () => resolve());
   });
+}
+
+async function loadRepositories() {
+  const savedRepoId = await getSavedRepositoryId();
+  selectedRepoId = savedRepoId;
+
+  const response = await sendToBackground({ type: "GET_REPOS" });
+  repoList = Array.isArray(response?.data) ? response.data : [];
+
+  if (!response?.success) {
+    throw new Error(response?.message || "Failed to load repositories");
+  }
+
+  return repoList;
+}
+
+function styleSelect(select) {
+  select.style.padding = "8px 10px";
+  select.style.borderRadius = "8px";
+  select.style.border = "1px solid #d1d5db";
+  select.style.fontSize = "13px";
+  select.style.minWidth = "200px";
+  select.style.maxWidth = "260px";
+  select.style.background = "#fff";
+  select.style.color = "#111827";
+  select.style.appearance = "auto";
+  select.style.display = "inline-block";
+  select.style.visibility = "visible";
+  select.style.opacity = "1";
+  select.style.height = "auto";
+  select.style.zIndex = "2147483647";
+}
+
+function fillRepoSelect(select, repos, savedRepoId) {
+  select.innerHTML = "";
+
+  const defaultOption = document.createElement("option");
+  defaultOption.value = "";
+  defaultOption.textContent = repos.length ? "Select repository" : "No repositories found";
+  select.appendChild(defaultOption);
+
+  repos.forEach((repo) => {
+    const option = document.createElement("option");
+    option.value = repo._id;
+    option.textContent = repo.repoName || repo.name || "Repository";
+    select.appendChild(option);
+  });
+
+  if (savedRepoId && repos.some((repo) => repo._id === savedRepoId)) {
+    select.value = savedRepoId;
+    selectedRepoId = savedRepoId;
+  }
 }
 
 async function createRepoDropdown(container) {
   const select = document.createElement("select");
   select.id = REPO_SELECT_ID;
-  select.style.padding = "10px";
-  select.style.borderRadius = "8px";
-  select.style.border = "1px solid #d1d5db";
-  select.style.fontSize = "14px";
-  select.style.marginRight = "10px";
-  select.style.minWidth = "220px";
-  select.style.background = "#fff";
+  styleSelect(select);
 
-  const defaultOption = document.createElement("option");
-  defaultOption.value = "";
-  defaultOption.textContent = "Select repository";
-  select.appendChild(defaultOption);
+  const loadingOption = document.createElement("option");
+  loadingOption.value = "";
+  loadingOption.textContent = "Loading repositories...";
+  select.appendChild(loadingOption);
 
-  try {
-    const repos = await getRepositories();
-    const savedRepoId = await getSavedRepositoryId();
+  select.addEventListener("change", async () => {
+    await saveRepositoryId(select.value);
+  });
 
-    console.log("GFGHub repos response:", repos);
-
-    repos.forEach((repo) => {
-      const option = document.createElement("option");
-      option.value = repo._id;
-      option.textContent = repo.repoName;
-      select.appendChild(option);
-    });
-
-    if (savedRepoId) {
-      select.value = savedRepoId;
-    }
-
-    select.addEventListener("change", async () => {
-      await saveRepositoryId(select.value);
-    });
-  } catch (err) {
-    console.error("Failed to load repositories:", err);
+  const button = container.querySelector(`#${BUTTON_ID}`);
+  if (button) {
+    container.insertBefore(select, button);
+  } else {
+    container.appendChild(select);
   }
 
-  container.appendChild(select);
+  try {
+    const repos = await loadRepositories();
+    fillRepoSelect(select, repos, selectedRepoId);
+  } catch (err) {
+    console.error("Failed to load repositories:", err);
+    select.innerHTML = "";
+    const errorOption = document.createElement("option");
+    errorOption.value = "";
+    errorOption.textContent = /login|authorized|token/i.test(err.message)
+      ? "Login on GFGHub website, keep it open, refresh"
+      : err.message || "Could not load repositories";
+    select.appendChild(errorOption);
+  }
+
   return select;
 }
-console.log("🚀 GFGHub content script loaded3");
 function createPushButton(container) {
   const btn = document.createElement("button");
   btn.id = BUTTON_ID;
@@ -80,7 +147,8 @@ function createPushButton(container) {
 
   btn.addEventListener("click", async () => {
     try {
-      const repositoryId = document.getElementById(REPO_SELECT_ID)?.value;
+      const repositoryId =
+        document.getElementById(REPO_SELECT_ID)?.value || selectedRepoId;
       if (!repositoryId) {
         alert("Please select a repository first.");
         return;
@@ -205,11 +273,20 @@ function extractProblemName() {
 
 function extractDifficulty() {
   try {
-    const text = document.body.innerText;
+    const header =
+      document.querySelector("[class*='problems_header']") ||
+      document.querySelector("[class*='problem_heading']") ||
+      document.body;
+    const text = header.innerText || "";
+    const labeled = text.match(/Difficulty:\s*(Easy|Medium|Hard)/i);
+    if (labeled) {
+      const value = labeled[1].toLowerCase();
+      return value.charAt(0).toUpperCase() + value.slice(1);
+    }
 
-    if (/hard/i.test(text)) return "Hard";
-    if (/medium/i.test(text)) return "Medium";
-    if (/easy/i.test(text)) return "Easy";
+    if (/\bHard\b/.test(text)) return "Hard";
+    if (/\bMedium\b/.test(text)) return "Medium";
+    if (/\bEasy\b/.test(text)) return "Easy";
   } catch (e) {
     console.error("extractDifficulty error:", e);
   }
@@ -276,74 +353,187 @@ function getCurrentCode() {
    UI bootstrap
 ---------------------------- */
 
-function mountUI() {
-  if (document.getElementById(CONTAINER_ID)) return;
-
-  const container = document.createElement("div");
-  container.id = CONTAINER_ID;
+function applyContainerStyles(container) {
   container.style.position = "fixed";
-  container.style.bottom = "20px";
-  container.style.right = "20px";
-  container.style.zIndex = "999999";
+  container.style.bottom = "24px";
+  container.style.right = "24px";
+  container.style.zIndex = "2147483647";
   container.style.display = "flex";
   container.style.alignItems = "center";
   container.style.gap = "10px";
   container.style.background = "#ffffff";
-  container.style.padding = "12px";
-  container.style.borderRadius = "10px";
-  container.style.boxShadow = "0 8px 20px rgba(0,0,0,0.15)";
+  container.style.padding = "12px 14px";
+  container.style.borderRadius = "12px";
+  container.style.boxShadow = "0 8px 24px rgba(0,0,0,0.2)";
+  container.style.border = "1px solid #e5e7eb";
+  container.style.fontFamily = "sans-serif";
+}
 
-  createRepoDropdown(container).then(() => {
-    createPushButton(container);
-  });
+function highlightAfterSuccess() {
+  const container = document.getElementById(CONTAINER_ID);
+  const btn = document.getElementById(BUTTON_ID);
+  if (!container || !btn) return;
 
+  container.style.border = "2px solid #16a34a";
+  container.style.boxShadow = "0 8px 28px rgba(22,163,74,0.35)";
+  btn.textContent = "Solved — Push to GitHub";
+  btn.style.background = "#16a34a";
+}
+
+function mountUI() {
+  if (!document.body) return;
+  if (document.getElementById(CONTAINER_ID)) return;
+
+  const container = document.createElement("div");
+  container.id = CONTAINER_ID;
+  applyContainerStyles(container);
+  createPushButton(container);
   document.body.appendChild(container);
+  createRepoDropdown(container);
+}
+
+const SUCCESS_PATTERNS = [
+  /problem solved successfully/i,
+  /solved successfully/i,
+  /correct answer/i,
+  /attempt successful/i,
+  /congratulations/i,
+  /all test cases passed/i,
+  /successfully submitted/i,
+  /your code is correct/i,
+];
+
+function pageLooksSolved() {
+  const text = document.body?.innerText || "";
+  return SUCCESS_PATTERNS.some((pattern) => pattern.test(text));
+}
+
+function isProblemPage() {
+  return /\/problems\//i.test(window.location.pathname);
+}
+
+function syncProblemUI() {
+  if (!isProblemPage()) {
+    document.getElementById(CONTAINER_ID)?.remove();
+    return;
+  }
+
+  mountUI();
+  if (pageLooksSolved()) {
+    highlightAfterSuccess();
+  }
+}
+
+function watchSpaNavigation() {
+  let lastUrl = location.href;
+
+  const onChange = () => {
+    if (location.href === lastUrl) return;
+    lastUrl = location.href;
+    setTimeout(syncProblemUI, 300);
+  };
+
+  const originalPush = history.pushState;
+  const originalReplace = history.replaceState;
+  history.pushState = function (...args) {
+    originalPush.apply(this, args);
+    onChange();
+  };
+  history.replaceState = function (...args) {
+    originalReplace.apply(this, args);
+    onChange();
+  };
+  window.addEventListener("popstate", onChange);
+}
+
+function syncWebsiteToken() {
+  try {
+    const fromStorage = window.localStorage.getItem("gfghub_token");
+    const fromQuery = new URLSearchParams(window.location.search).get("token");
+    const token = fromQuery || fromStorage;
+    if (!token) return;
+
+    chrome.storage.local.set({ jwt: token }, () => {
+      console.log("GFGHub: synced login token from website");
+    });
+  } catch (error) {
+    console.warn("GFGHub: token sync failed", error);
+  }
 }
 
 function initWhenReady() {
   // Check if we are on the frontend website (Vercel or localhost)
   if (
     window.location.hostname.includes("vercel.app") ||
-    window.location.hostname.includes("localhost")
+    window.location.hostname.includes("localhost") ||
+    window.location.hostname.includes("127.0.0.1")
   ) {
-    if (window.location.pathname.startsWith("/auth-success")) {
-      const urlParams = new URLSearchParams(window.location.search);
-      const token = urlParams.get("token");
-      if (token) {
-        chrome.storage.local.set({ jwt: token }, () => {
-          console.log("GFGHub: Token saved successfully from auth-success page.");
-        });
+    syncWebsiteToken();
+    window.addEventListener("message", (event) => {
+      if (event.source !== window) return;
+      if (event.data?.type === "GFGHUB_SAVE_TOKEN" && event.data.token) {
+        chrome.storage.local.set({ jwt: event.data.token });
       }
-    }
-    return; // Exit early — not a GFG problem page
-  }
-
-  // Only activate on GFG problem pages
-  if (!window.location.pathname.includes("/problems/")) {
+    });
     return;
   }
 
-  // Wait for the success message to appear before mounting the UI
-  const checkSuccess = () => {
-    if (document.getElementById(CONTAINER_ID)) return; // Already mounted
+  const start = () => {
+    syncProblemUI();
+    watchSpaNavigation();
 
-    const text = document.body.innerText || "";
-    // Common GFG success texts
-    if (
-      text.includes("Problem Solved Successfully") ||
-      text.includes("Correct Answer") ||
-      text.includes("Attempt Successful")
-    ) {
-      mountUI();
-    }
+    window.addEventListener("message", (event) => {
+      if (event.source !== window) return;
+      if (event.data?.type === "GFG_SUBMIT_SUCCESS") {
+        console.log("GFGHub: detected accepted submission");
+        mountUI();
+        highlightAfterSuccess();
+      }
+      if (event.data?.type === "GFG_URL_CHANGE") {
+        setTimeout(syncProblemUI, 200);
+      }
+    });
+
+    let checkScheduled = false;
+    const observer = new MutationObserver(() => {
+      if (checkScheduled) return;
+      checkScheduled = true;
+      setTimeout(() => {
+        checkScheduled = false;
+        if (!isProblemPage()) return;
+        if (!document.getElementById(CONTAINER_ID)) {
+          mountUI();
+        }
+      }, 400);
+    });
+
+    observer.observe(document.documentElement, {
+      childList: true,
+      subtree: true,
+    });
+
+    document.addEventListener(
+      "click",
+      (event) => {
+        const label = event.target?.innerText || event.target?.textContent || "";
+        if (!/submit/i.test(label)) return;
+        [1500, 4000, 8000].forEach((ms) => {
+          setTimeout(() => {
+            if (pageLooksSolved()) {
+              mountUI();
+              highlightAfterSuccess();
+            }
+          }, ms);
+        });
+      },
+      true
+    );
   };
 
   if (document.readyState === "loading") {
-    window.addEventListener("DOMContentLoaded", () => {
-      setInterval(checkSuccess, 2000);
-    });
+    window.addEventListener("DOMContentLoaded", start);
   } else {
-    setInterval(checkSuccess, 2000);
+    start();
   }
 }
 
